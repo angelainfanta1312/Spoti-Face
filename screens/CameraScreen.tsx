@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
+import { render } from 'react-dom';
 //import createPlaylist from '../Playlist'
 
 var photo: any = null;
@@ -13,7 +14,7 @@ const CameraScreen = ({ navigation }) => {
   const [faces, setFaces] = useState([]);
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
-  
+
   //TODO move this to earlier screen
   useEffect(() => {
     (async () => {
@@ -65,6 +66,7 @@ const CameraScreen = ({ navigation }) => {
     //Move to last screen (send it promise)
     //FOR NOW,
     setPressed(false);
+    navigation.navigate('Playlist');
   };
 
   let onFaceDetected = (faces) => {
@@ -72,10 +74,23 @@ const CameraScreen = ({ navigation }) => {
     else setFaceOnscreen(false);
   };
 
-  if (pressed) {
+  const render = () => {
+    if (pressed) {
+      return renderPressed();
+    } else {
+      return renderUnpressed();
+    }
+  };
+
+  const renderPressed = () => {
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', alignContent: 'center', backgroundColor: '#000' }}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignContent: 'center',
+          backgroundColor: '#000',
+        }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
@@ -88,22 +103,38 @@ const CameraScreen = ({ navigation }) => {
         </View>
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "flex-end",
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'flex-end',
             paddingBottom: 20,
-            backgroundColor: '#000'
+            backgroundColor: '#000',
           }}
         >
-          <Icon name="ios-close" size={65} onPress={() => deny()} style={{color: 'red'}}></Icon>
-          <Icon name="ios-checkmark" size={65} onPress={() => confirm()} style= {{color: 'green'}}></Icon>
+          <Icon
+            name='ios-close'
+            size={65}
+            onPress={() => deny()}
+            style={{ color: 'red' }}
+          ></Icon>
+          <Icon
+            name='ios-checkmark'
+            size={65}
+            onPress={() => confirm()}
+            style={{ color: 'green' }}
+          ></Icon>
         </View>
       </View>
     );
-  } else {
+  };
+  const renderUnpressed = () => {
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' , backgroundColor: '#000'}}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignContent: 'center',
+          backgroundColor: '#000',
+        }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
@@ -117,25 +148,25 @@ const CameraScreen = ({ navigation }) => {
         </View>
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "flex-end",
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'flex-end',
             alignContent: 'center',
             paddingBottom: 20,
-            backgroundColor: "#000"
+            backgroundColor: '#000',
           }}
         >
           <TouchableOpacity
             onPress={takePic}
             style={{
               borderWidth: 1,
-              borderColor: "rgba(0,0,0,0.2)",
-              alignItems: "center",
-              justifyContent: "center",
+              borderColor: 'rgba(0,0,0,0.2)',
+              alignItems: 'center',
+              justifyContent: 'center',
               width: 70,
               height: 70,
-              margin : 10,
-              backgroundColor: faceOnscreen ? "green" : "red",
+              margin: 10,
+              backgroundColor: faceOnscreen ? 'green' : 'red',
               borderRadius: 50,
             }}
           >
@@ -157,7 +188,9 @@ const CameraScreen = ({ navigation }) => {
         </TouchableOpacity> */}
       </View>
     );
-  }
+  };
+
+  return render();
 };
 
 export default CameraScreen;
