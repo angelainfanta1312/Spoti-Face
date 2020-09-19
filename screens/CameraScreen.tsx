@@ -64,7 +64,7 @@ const CameraScreen = ({ navigation }) => {
         %
       </Text>
       <TouchableOpacity
-        onPress={() => navigation.navigate('Information')}
+        onPress={takePic}
         style={{
           flex: 0.15,
           alignItems: 'center',
