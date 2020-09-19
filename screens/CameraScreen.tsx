@@ -66,7 +66,7 @@ const CameraScreen = ({ navigation }) => {
     }).then(({ faces, image }) => {
       setPressed(false);
       let playlistPromise = createPlaylist(photo.base64, faces[0])
-      navigation.navigate('Playlist', {playlistPromise});
+      navigation.navigate('Playlist', {playlistPromise:playlistPromise});
     })
     .catch((error) => console.log('Failed to detect. error: \n' + error));
   };

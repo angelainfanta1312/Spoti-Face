@@ -194,8 +194,9 @@ const LandingScreen = ({ navigation }: any) => {
             <TouchableHighlight
               style={styles.submit}
               underlayColor="#1DB954"
-              onPress={() => {
-                promptAsync();
+              onPress={async () => {
+                await promptAsync();
+                navigation.navigate('Camera');
               }}
             >
               <Text style={styles.submitText}>login to spotify</Text>
