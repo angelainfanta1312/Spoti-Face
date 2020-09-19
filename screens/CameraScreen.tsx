@@ -95,7 +95,7 @@ const CameraScreen = ({ navigation }) => {
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
             style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
-            type='front'
+            type="front"
             ref={(ref) => {
               this.camera = ref;
             }}
@@ -111,13 +111,13 @@ const CameraScreen = ({ navigation }) => {
           }}
         >
           <Icon
-            name='ios-close'
+            name="ios-close"
             size={65}
             onPress={() => deny()}
             style={{ color: 'red' }}
           ></Icon>
           <Icon
-            name='ios-checkmark'
+            name="ios-checkmark"
             size={65}
             onPress={() => confirm()}
             style={{ color: 'green' }}
@@ -139,7 +139,7 @@ const CameraScreen = ({ navigation }) => {
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
             style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
-            type='front'
+            type="front"
             onFacesDetected={onFaceDetected}
             ref={(ref) => {
               this.camera = ref;
