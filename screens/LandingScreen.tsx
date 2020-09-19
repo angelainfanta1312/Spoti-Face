@@ -20,6 +20,7 @@ import {
   Text,
   Alert,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { Constants } from "expo-camera";
 
@@ -40,24 +41,26 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.titleTextFirst}>step 1: </Text>
-          <Text style={styles.titleTextSecond}>take a picture</Text>
+          <TouchableOpacity onPress={() => setState(1)}>
+            <Text style={styles.titleTextFirst}>step 1: </Text>
+            <Text style={styles.titleTextSecond}>take a picture</Text>
 
-          <Image
-            source={{ uri: onboard1.uri }}
-            style={{ width: 400, height: 400 }}
-          />
+            <Image
+              source={{ uri: onboard1.uri }}
+              style={{ width: 400, height: 400 }}
+            />
 
-          <Text style={styles.titleTextThird}>
-            our camera will let you know if your face is detectable through
-            turning the button red or green
-          </Text>
+            <Text style={styles.titleTextThird}>
+              our camera will let you know if your face is detectable through
+              turning the button red or green
+            </Text>
 
-          <View style={styles.footerWrapper}>
-            <Ionicons name="ios-beer" size={32} color="white" />
-            <Ionicons name="ios-beer" size={32} color="green" />
-            <Ionicons name="ios-beer" size={32} color="green" />
-          </View>
+            <View style={styles.footerWrapper}>
+              <Ionicons name="ios-beer" size={32} color="white" />
+              <Ionicons name="ios-beer" size={32} color="green" />
+              <Ionicons name="ios-beer" size={32} color="green" />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
