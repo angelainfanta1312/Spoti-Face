@@ -12,6 +12,7 @@ const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faces, setFaces] = useState([]);
   const [pressed, setPressed] = useState(false);
+  const [faceOnscreen, setFaceOnscreen] = useState(false);
 
   //TODO move this to earlier screen
   useEffect(() => {
@@ -38,17 +39,17 @@ const CameraScreen = ({ navigation }) => {
   };
 
   let deny = () => {
-    setPressed(false);
     this.camera.resumePreview();
+    setPressed(false);
     photo = null;
   };
 
   let confirm = () => {
-
     if(photo == null){
       console.error("Photo not taken or set!")
       return
     }
+
 
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
@@ -57,13 +58,21 @@ const CameraScreen = ({ navigation }) => {
     })
     .then(({ faces, image }) => {
       setFaces(faces);
-      //createPlaylist(face, photo.base64)
+      //createPlaylist(face, photo.base64).then( // stop loading on lastscreen).then(stop loading)
     })
     .catch((error) => console.log('Failed to detect. error: \n' + error));
 
-    //Move to last screen (with promise?)
+    //Move to last screen (send it promise)
     //FOR NOW,
     setPressed(false);
+
+  }
+
+  let onFaceDetected = (faces) => {
+    if (faces.faces.length > 0)
+      setFaceOnscreen(true);
+    else
+      setFaceOnscreen(false);
 
   }
 
@@ -95,7 +104,7 @@ const CameraScreen = ({ navigation }) => {
         <Text style={{ fontSize: 25 }}>Snap</Text>
     </TouchableOpacity> */}
         <View style={{ paddingLeft: 15, paddingBottom: 10 }}>
-          <Icon name='ios-beer' size={30} onPress={() => confirm()}></Icon>
+          <Icon name='ios-beer' size={30} onPress={() => deny()}></Icon>
         </View>
         <View
           style={{
@@ -104,7 +113,7 @@ const CameraScreen = ({ navigation }) => {
             justifyContent: 'flex-end',
           }}
         >
-          <Icon name='ios-beer' size={30} onPress={() => deny()}></Icon>
+          <Icon name='ios-beer' size={30} onPress={() => confirm()}></Icon>
         </View>
       </View>
     );
@@ -117,6 +126,7 @@ const CameraScreen = ({ navigation }) => {
           <Camera
             style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
             type='front'
+            onFacesDetected={onFaceDetected}
             ref={(ref) => {
               this.camera = ref;
             }}
@@ -145,7 +155,7 @@ const CameraScreen = ({ navigation }) => {
             justifyContent: 'center',
             margin: 30,
             width: '80%',
-            backgroundColor: '#DDD',
+            backgroundColor: faceOnscreen ? 'green' : 'red'
           }}
         >
           <Text style={{ fontSize: 25 }}>Snap</Text>
