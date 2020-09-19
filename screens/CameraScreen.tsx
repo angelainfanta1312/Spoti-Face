@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
 import * as FaceDetector from "expo-face-detector";
 import Icon from "react-native-vector-icons/Ionicons";
-import { setStatusBarBackgroundColor } from "expo-status-bar";
+import createPlaylist from "../Playlist";
 //import createPlaylist from '../Playlist'
 
 var photo = null;
@@ -56,7 +56,7 @@ const CameraScreen = ({ navigation }) => {
     })
       .then(({ faces, image }) => {
         setFaces(faces);
-        //createPlaylist(face, photo.base64).then( // stop loading on lastscreen).then(stop loading)
+        //createPlaylist("dummy", photo.base64).then( // stop loading on lastscreen).then(stop loading)
       })
       .catch((error) => console.log("Failed to detect. error: \n" + error));
 
