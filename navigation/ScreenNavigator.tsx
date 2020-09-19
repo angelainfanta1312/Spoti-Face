@@ -27,16 +27,10 @@ const MyStack = () => {
           options={{ title: 'Welcome to Spotiface', headerShown: false }}
         />
         <Stack.Screen
-          name='Info'
-          component={HomeScreen}
-          options={{ title: 'Information' }}
+          name='Camera'
+          component={CameraScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name='Jump'
-          component={HomeScreen}
-          options={{ title: 'Get Started' }}
-        />
-        <Stack.Screen name='Camera' component={CameraScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Playlist' component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
