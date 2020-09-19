@@ -14,6 +14,7 @@ import {
 
 import LandingScreen from '../screens/LandingScreen';
 import CameraScreen from '../screens/CameraScreen';
+import PlaylistScreen from '../screens/PlaylistScreen';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +32,7 @@ const MyStack = () => {
           component={CameraScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name='Playlist' component={ProfileScreen} />
+        <Stack.Screen name='Playlist' component={PlaylistScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
