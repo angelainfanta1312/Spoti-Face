@@ -3,13 +3,17 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 //import createPlaylist from '../Playlist'
+
+var photo = null;
 
 const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faces, setFaces] = useState([]);
   const [pressed, setPressed] = useState(false);
 
+  //TODO move this to earlier screen
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -17,38 +21,52 @@ const CameraScreen = ({ navigation }) => {
     })();
   }, []);
 
+  //TODO make this better
   if (hasPermission !== true) {
     return <Text>No access to camera</Text>;
   }
 
   let takePic = async () => {
-
-
     if (this.camera) {
-      this.camera.resumePreview();
-      photo = await this.camera.takePictureAsync(); //{photo} = {uri, width, height, exf, base64}
-      //Rest of this (later) will be called on CONFIRM
+      photo = await this.camera.takePictureAsync();
       this.camera.pausePreview();
-      FaceDetector.detectFacesAsync(photo.uri, {
-        mode: FaceDetector.Constants.Mode.accurate,
-        runClassifications: FaceDetector.Constants.Classifications.all,
-        detectLandmarks: FaceDetector.Constants.Landmarks.none,
-      })
-        .then(({ faces, image }) => {
-          setFaces(faces);
-          //createPlaylist(face, photo.base64)
-        })
-        .catch((error) => console.log('Failed to detect. error: \n' + error));
+      setPressed(true);
     } else {
       console.log('camera not set.');
     }
-    setPressed(true);
+    
   };
 
-  let resumeMoving = () => {
+  let deny = () => {
     setPressed(false);
     this.camera.resumePreview();
+    photo = null;
   };
+
+  let confirm = () => {
+
+    if(photo == null){
+      console.error("Photo not taken or set!")
+      return
+    }
+
+    FaceDetector.detectFacesAsync(photo.uri, {
+      mode: FaceDetector.Constants.Mode.accurate,
+      runClassifications: FaceDetector.Constants.Classifications.all,
+      detectLandmarks: FaceDetector.Constants.Landmarks.none,
+    })
+    .then(({ faces, image }) => {
+      setFaces(faces);
+      //createPlaylist(face, photo.base64)
+    })
+    .catch((error) => console.log('Failed to detect. error: \n' + error));
+
+    //Move to last screen (with promise?)
+    //FOR NOW,
+    setPressed(false);
+
+  }
+
   if (pressed) {
     return (
       <View
@@ -77,7 +95,7 @@ const CameraScreen = ({ navigation }) => {
         <Text style={{ fontSize: 25 }}>Snap</Text>
     </TouchableOpacity> */}
         <View style={{ paddingLeft: 15, paddingBottom: 10 }}>
-          <Icon name='ios-beer' size={30} onPress={() => resumeMoving()}></Icon>
+          <Icon name='ios-beer' size={30} onPress={() => confirm()}></Icon>
         </View>
         <View
           style={{
@@ -86,7 +104,7 @@ const CameraScreen = ({ navigation }) => {
             justifyContent: 'flex-end',
           }}
         >
-          <Icon name='ios-beer' size={30} onPress={() => resumeMoving()}></Icon>
+          <Icon name='ios-beer' size={30} onPress={() => deny()}></Icon>
         </View>
       </View>
     );
