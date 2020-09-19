@@ -5,13 +5,12 @@ import * as FaceDetector from 'expo-face-detector';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { render } from 'react-dom';
-//import createPlaylist from '../Playlist'
+import createPlaylist from '../Playlist'
 
 var photo: any = null;
 
 const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [faces, setFaces] = useState([]);
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
 
@@ -38,10 +37,8 @@ const CameraScreen = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
 
-  let resume = () => this.camera.resumePreview()
-
   let takePic = async () => {
-    if (this.camera) {
+    if (this.camera && faceOnscreen) {
       photo = await this.camera.takePictureAsync();
       this.camera.pausePreview();
       setPressed(true);
@@ -62,23 +59,16 @@ const CameraScreen = ({ navigation }) => {
       return;
     }
 
-    let faceData = FaceDetector.detectFacesAsync(photo.uri, {
+    FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
-    });
-
-    faceData
-      .then(({ faces, image }) => {
-        setFaces(faces);
-        //createPlaylist(faces[0], photo.base64).then( // stop loading on lastscreen).then(stop loading)
-      })
-      .catch((error) => console.log('Failed to detect. error: \n' + error));
-
-    //Move to last screen (send it promise)
-    //FOR NOW,
-    setPressed(false);
-    navigation.navigate('Playlist');
+    }).then(({ faces, image }) => {
+      setPressed(false);
+      let playlistPromise = createPlaylist(photo.base64, faces[0])
+      navigation.navigate('Playlist', {playlistPromise});
+    })
+    .catch((error) => console.log('Failed to detect. error: \n' + error));
   };
 
   let onFaceDetected = (faces) => {

@@ -1,16 +1,20 @@
 const axios = require('axios');
 
 // export default function createPlaylist(base64:string, face:any){
-function createPlaylist(){
-  return new Promise(async (resolve, reject) => {
+export default function createPlaylist(image_data: string, face: any){
+    return new Promise(async (resolve, reject) => {
 
-//figure out TARGETPARAMS
-// []
+        //figure out TARGETPARAMS
+        // []
 
+                
 
+        // []
+        // (outputs {target_energy, target_danceability...})
 
-// []
-// (outputs {target_energy, target_danceability...})
+        //for now, 
+        let params = {valence: face.smilingProbability}
+        let variability = .15;
 
 
 		//handle auth...
@@ -25,18 +29,22 @@ function createPlaylist(){
 		let auth = getUserPass()
 		let auth_token = auth[0]
 		let user_name = auth[1]
-		let playlist_name = "Test Playlist"
-		let playlist_id = 0
-		let topTracks = []
-		let params = {"valence" : 1.0}
+        let playlist_name = "bufftest1"
+        let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
+        let size = 20 //not really though
+        
 
-		// #Gets the uri of the top tracks
+		let playlist_id = null;
+		let topTracks = []
+
+
+		// #Gets the uris of the top tracks
 		await axios.get('https://api.spotify.com/v1/me/top/tracks', {
 				headers: {
 						'Authorization' : 'Bearer ' + auth_token,
 				},
 				params: {
-					'limit': 30,
+					'limit': 50,
 				}
 		})
 		.then((res) => {
@@ -51,30 +59,33 @@ function createPlaylist(){
 				reject("Couldn't get the top tracks")
 		})
 
-		// #To get emotionally appropriate songs
+		// #To get emotionally appropriate songs from top tracks
 		let emotionTopTracks = []
 		for(var i = 0; i < topTracks.length; i++){
 				
-				let split = topTracks[i].split(":")
-				let track_id = split[2]
-				await axios.get('https://api.spotify.com/v1/audio-features/' + track_id, {
-				headers: {
-						'Authorization' : 'Bearer ' + auth_token,
-				}
-				})
-				.then((res) => {
-						let features = res.data
-						console.log(features["valence"])
-						if(features["valence"] < .4){
-								emotionTopTracks.push(topTracks[i])
-						}
-						// console.log(res.data)
-				})
-				.catch((error) => {
-						console.error(error)
-						reject("Couldn't get the audio features")
-				})
-			}
+            let split = topTracks[i].split(":")
+            let track_id = split[2]
+            await axios.get('https://api.spotify.com/v1/audio-features/' + track_id, {
+            headers: {
+                    'Authorization' : 'Bearer ' + auth_token,
+            }
+            })
+            .then((res) => {
+                    let features = res.data
+                    console.log(features["valence"])
+                    let valDiff = Math.abs(features["valence"] - params.valence) //use this to sort later
+                    if(valDiff < variability){
+                            emotionTopTracks.push(topTracks[i])
+                    }
+                    // console.log(res.data)
+            })
+            .catch((error) => {
+                    console.error(error)
+                    reject("Couldn't get the audio features")
+            })
+        }
+    
+        //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
 		console.log(seed_track)
@@ -87,32 +98,31 @@ function createPlaylist(){
 
 		console.log(seed_track)
 		
-		//Creates a playlist to test seeding
-		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": "Seeded Sadder Songs", "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-			.then((res) => {
-				console.log(res.data)
-				playlist_id = res.data["id"]
-				console.log(playlist_id)
-			})
-			.catch((error) => {
-				console.error(error)
-				reject("Can't create a new playlist")
+		//Creates the playlist
+		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+            .then((res) => {
+                console.log(res.data)
+                playlist_id = res.data["id"]
+                console.log(playlist_id)
+            })
+            .catch((error) => {
+                console.error(error)
+                reject("Can't create a new playlist")
 		})
 
-		let size = 30
+
+        //gets reccomended tracks
 		let newTracks = []
-		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
 		await axios.get('https://api.spotify.com/v1/recommendations', {
 		headers: {
 			'Authorization' : 'Bearer ' + auth_token,
 		},
 		params: {
-			"limit" : size*newness,
+			"limit" : newness * size,
 			"seed_tracks" : seed_track,
 			"seed_artists" : "",
 			"seed_genres" : "",
-			"target_valence" : .3,
-			"target_energy" : .3,
+			"target_valence" : params.valence
 		},
 		})
 		.then((res) => {
@@ -127,6 +137,7 @@ function createPlaylist(){
 			console.error(error)
 		})
 
+        //Adds reccomended tracks
 		await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris": newTracks}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
 		.then((res) => {
 			// console.log(res.data)
@@ -139,41 +150,7 @@ function createPlaylist(){
 			reject("Couldn't add the song to the playlist")
 		})
 
-		// for(let i = 0; i < newTracks.length; i++){
-		// 	await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":[newTracks[i]]}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-		// 	.then((res) => {
-		// 		// console.log(res.data)
-		// 		console.log("Added data")
-		// 	})
-		// 	.catch((error) => {
-		// 		// console.error(error)
-		// 		console.log("couldn't add song")
-		// 		console.log(newTracks[i])
-		// 		reject("Couldn't add the song to the playlist")
-		// 	})
-		// }
-
-
-
-		// newTracks = spotifyGetBasedonseed(limit size * newness: seed : (5tracks/genre), targetParams)
-		// oldTracks = emtionTopTracks[:(size * (1 - newness))]
-
-
-		//Creates a playlist to store the songs we recommend
-		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-			.then((res) => {
-				console.log(res.data)
-				playlist_id = res.data["id"]
-				console.log(playlist_id)
-			})
-			.catch((error) => {
-				console.error(error)
-				reject("Can't create a new playlist")
-		})
-
-
-		// addTracks(tracks)
-		//Should add all tracks
+		// Adds initially found emotionally appropriate top tracks
 		await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":emotionTopTracks}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
 			.then((res) => {
 				console.log(res.data)
@@ -192,9 +169,9 @@ function createPlaylist(){
     // .catch((error) => {
     //     console.error(error)
     // })
-// }
-  })
+    // }
+
+        resolve(playlist_id)
+
+    })
 }
-
-
-createPlaylist()
