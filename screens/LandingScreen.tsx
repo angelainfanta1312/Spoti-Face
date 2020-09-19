@@ -20,6 +20,7 @@ import {
   Text,
   Alert,
   Image,
+  TouchableOpacity,
 } from "react-native";
 import { Constants } from "expo-camera";
 
@@ -40,24 +41,26 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.titleTextFirst}>step 1: </Text>
-          <Text style={styles.titleTextSecond}>take a picture</Text>
+          <TouchableOpacity onPress={() => setState(1)}>
+            <Text style={styles.titleTextFirst}>step 1: </Text>
+            <Text style={styles.titleTextSecond}>take a picture</Text>
 
-          <Image
-            source={{ uri: onboard1.uri }}
-            style={{ width: 400, height: 400 }}
-          />
+            <Image
+              source={{ uri: onboard1.uri }}
+              style={{ width: 400, height: 400 }}
+            />
 
-          <Text style={styles.titleTextThird}>
-            our camera will let you know if your face is detectable through
-            turning the button red or green
-          </Text>
+            <Text style={styles.titleTextThird}>
+              our camera will let you know if your face is detectable through
+              turning the button red or green
+            </Text>
 
-          <View style={styles.footerWrapper}>
-            <Ionicons name="ios-beer" size={32} color="white" />
-            <Ionicons name="ios-beer" size={32} color="green" />
-            <Ionicons name="ios-beer" size={32} color="green" />
-          </View>
+            <View style={styles.footerWrapper}>
+              <Ionicons name="ios-beer" size={32} color="white" />
+              <Ionicons name="ios-beer" size={32} color="green" />
+              <Ionicons name="ios-beer" size={32} color="green" />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -65,18 +68,62 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Text style={styles.titleTextFirst}>step 1: </Text>
-          <Text style={styles.titleTextSecond}>take a picture</Text>
+          <TouchableOpacity onPress={() => setState(2)}>
+            <Text style={styles.titleTextFirst}>step 2: </Text>
+            <Text style={styles.titleTextSecond2}>we analyze your face</Text>
 
-          <Image
-            source={{ uri: onboard1.uri }}
-            style={{ width: 400, height: 400 }}
-          />
+            <Image
+              source={{ uri: onboard1.uri }}
+              style={{ width: 400, height: 400 }}
+            />
+
+            <Text style={styles.titleTextThird}>
+              we use your facial landmarks like your smile with google vision
+              technology to detect your emotion
+            </Text>
+
+            <View style={styles.footerWrapper}>
+              <Ionicons name="ios-beer" size={32} color="green" />
+              <Ionicons name="ios-beer" size={32} color="white" />
+              <Ionicons name="ios-beer" size={32} color="green" />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
   } else {
-    return <Text>This is state {state}</Text>;
+    return (
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Camera", { name: "Jane" })}
+          >
+            <Text style={styles.titleTextFirst}>step 3: </Text>
+            <Text style={styles.titleTextSecond}>blah blah blah</Text>
+
+            <Image
+              source={{ uri: onboard1.uri }}
+              style={{ width: 400, height: 400 }}
+            />
+
+            <Text style={styles.titleTextThird}>
+              we use your facial landmarks like your smile with google vision
+              technology to detect your emotion
+            </Text>
+
+            <View style={styles.footerWrapper}>
+              <Ionicons name="ios-beer" size={32} color="green" />
+              <Ionicons name="ios-beer" size={32} color="green" />
+              <Ionicons name="ios-beer" size={32} color="white" />
+            </View>
+
+            <Text style={styles.titleTextFourth}>
+              tap anywhere to get started!
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
 };
 
@@ -107,6 +154,13 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingTop: 10,
   },
+  titleTextSecond2: {
+    fontSize: 44,
+    fontWeight: "400",
+    color: "white",
+    paddingLeft: 5,
+    paddingTop: 10,
+  },
   titleTextThird: {
     fontSize: 24,
     fontWeight: "400",
@@ -119,7 +173,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexDirection: "row",
     paddingTop: 45,
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
+  },
+  titleTextFourth: {
+    fontSize: 20,
+    fontWeight: "400",
+    color: "white",
+    paddingLeft: 15,
   },
 });
 
