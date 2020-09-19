@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { makeRedirectUri, useAuthRequest, ResponseType } from 'expo-auth-session';
 import Icon from "react-native-vector-icons/Ionicons";
 import {
   StyleSheet,
@@ -25,7 +26,7 @@ const MyStack = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Landing"
-          component={LandingScreen}
+          component={HomeScreen}
           options={{ title: "Welcome to Spotiface", headerShown: false }}
         />
         <Stack.Screen
@@ -44,11 +45,35 @@ const MyStack = () => {
 };
 
 const HomeScreen = ({ navigation }: any) => {
+	const discovery = {
+		authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+		tokenEndpoint: 'https://accounts.spotify.com/api/token',
+	};
+	
+	const [request, response, promptAsync] = useAuthRequest(
+		{
+			responseType: ResponseType.Token,
+			clientId: '2d76215e913f4fcf92c226d665f58c1b',
+			scopes: ['playlist-modify-private', 'playlist-modify-public'],
+			// In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
+			// this must be set to false
+			usePKCE: false,
+			// For usage in managed apps using the proxy
+			redirectUri: makeRedirectUri(),
+		},
+		discovery
+	);
+	React.useEffect(() => {
+		if (response?.type === 'success') {
+			const { token } = response.params;
+			console.log(response.authentication?.accessToken)
+	}}, [response]);
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
       <Button
         title="Go to Jane's profile"
-        onPress={() => navigation.navigate("Camera", { name: "Jane" })}
+        onPress={() =>{promptAsync()}}
       />
     </View>
   );
