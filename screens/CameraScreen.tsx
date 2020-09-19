@@ -15,6 +15,16 @@ const CameraScreen = ({ navigation }) => {
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
 
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if(this.camera)
+        this.camera.resumePreview()
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
   //TODO move this to earlier screen
   useEffect(() => {
     (async () => {
@@ -27,6 +37,8 @@ const CameraScreen = ({ navigation }) => {
   if (hasPermission !== true) {
     return <Text>No access to camera</Text>;
   }
+
+  let resume = () => this.camera.resumePreview()
 
   let takePic = async () => {
     if (this.camera) {
