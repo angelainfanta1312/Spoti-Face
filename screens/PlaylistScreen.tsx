@@ -5,6 +5,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { Asset } from "expo-asset";
 import * as Linking from 'expo-linking';
+const axios = require('axios');
+const qs = require('qs')
+import * as WebBrowser from 'expo-web-browser';
+import { makeRedirectUri, useAuthRequest, ResponseType } from 'expo-auth-session';
 const iconround = Asset.fromModule(require("../assets/images/icon.png"));
 const spottext = Asset.fromModule(
   require("../assets/images/spotifacetext.png")
@@ -20,6 +24,7 @@ import {
   Image,
 } from "react-native";
 
+
 const PlaylistScreen = ({
   navigation,
   playlistPromise,
@@ -27,6 +32,30 @@ const PlaylistScreen = ({
   navigation: any;
   playlistPromise: any;
 }) => {
+	const discovery = {
+		authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+		tokenEndpoint: 'https://accounts.spotify.com/api/token',
+	};
+	
+	const [request, response, promptAsync] = useAuthRequest(
+		{
+			responseType: ResponseType.Token,
+			clientId: '2d76215e913f4fcf92c226d665f58c1b',
+			scopes: ['playlist-modify-private', 'playlist-modify-public'],
+			// In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
+			// this must be set to false
+			usePKCE: false,
+			// For usage in managed apps using the proxy
+			redirectUri: makeRedirectUri(),
+		},
+		discovery
+	);
+	React.useEffect(() => {
+		if (response?.type === 'success') {
+			const { token } = response.params;
+			console.log(response.authentication?.accessToken)
+	}}, [response]);
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -67,7 +96,9 @@ const PlaylistScreen = ({
             <TouchableHighlight
               style={styles.submit}
               underlayColor="#1DB954"
-              onPress={() => Linking.openURL('spotify:playlist:25pw2FVAbqv1Bi1t4FTzmL')}
+              onPress={() => {
+								promptAsync();
+								}}
             >
               <Text style={styles.submitText}>open playlist in Spotify</Text>
             </TouchableHighlight>

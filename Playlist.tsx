@@ -135,24 +135,9 @@ function createPlaylist(){
 		.catch((error) => {
 			// console.error(error)
 			console.log("couldn't add song")
-			console.log(newTracks[i])
+			console.log(newTracks)
 			reject("Couldn't add the song to the playlist")
 		})
-
-		// for(let i = 0; i < newTracks.length; i++){
-		// 	await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":[newTracks[i]]}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-		// 	.then((res) => {
-		// 		// console.log(res.data)
-		// 		console.log("Added data")
-		// 	})
-		// 	.catch((error) => {
-		// 		// console.error(error)
-		// 		console.log("couldn't add song")
-		// 		console.log(newTracks[i])
-		// 		reject("Couldn't add the song to the playlist")
-		// 	})
-		// }
-
 
 
 		// newTracks = spotifyGetBasedonseed(limit size * newness: seed : (5tracks/genre), targetParams)
