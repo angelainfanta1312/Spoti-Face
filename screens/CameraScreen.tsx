@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faces, setFaces] = useState([]);
+  const [pressed, setPressed] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -35,49 +37,99 @@ const CameraScreen = ({ navigation }) => {
     } else {
       console.log('camera not set.');
     }
+    setPressed(true);
   };
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
-      <View style={{ flex: 1, paddingBottom: 20 }}>
-        <Camera
-          style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
-          type='front'
-          ref={(ref) => {
-            this.camera = ref;
-          }}
-        />
-      </View>
-      <Text style={{ fontSize: 18, marginHorizontal: 20, marginBottom: 0 }}>
-        Smile:{' '}
-        {faces.length > 0
-          ? (faces[0].smilingProbability * 100).toFixed(2)
-          : '      '}
-        % Left:{' '}
-        {faces.length > 0
-          ? (faces[0].leftEyeOpenProbability * 100).toFixed(2)
-          : '      '}
-        % Right:{' '}
-        {faces.length > 0
-          ? (faces[0].rightEyeOpenProbability * 100).toFixed(2)
-          : '      '}
-        %
-      </Text>
-      <TouchableOpacity
+  let resumeMoving = () => {
+    setPressed(false);
+    this.camera.resumePreview();
+  };
+  if (pressed) {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+      >
+        <View style={{ flex: 1, paddingBottom: 20 }}>
+          <Camera
+            style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
+            type='front'
+            ref={(ref) => {
+              this.camera = ref;
+            }}
+          />
+        </View>
+        {/* <TouchableOpacity
         onPress={takePic}
         style={{
-          flex: 0.15,
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: 30,
-          width: '80%',
-          backgroundColor: '#DDD',
+        flex: 0.15,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 30,
+        width: '80%',
+        backgroundColor: '#DDD',
         }}
-      >
+    >
         <Text style={{ fontSize: 25 }}>Snap</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    </TouchableOpacity> */}
+        <View style={{ paddingLeft: 15, paddingBottom: 10 }}>
+          <Icon name='ios-beer' size={30} onPress={() => resumeMoving()}></Icon>
+        </View>
+        <View
+          style={{
+            position: 'absolute',
+            marginBottom: 0,
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Icon name='ios-beer' size={30} onPress={() => resumeMoving()}></Icon>
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <View
+        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+      >
+        <View style={{ flex: 1, paddingBottom: 20 }}>
+          <Camera
+            style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
+            type='front'
+            ref={(ref) => {
+              this.camera = ref;
+            }}
+          />
+        </View>
+        <Text style={{ fontSize: 18, marginHorizontal: 20, marginBottom: 0 }}>
+          Smile:{' '}
+          {faces.length > 0
+            ? (faces[0].smilingProbability * 100).toFixed(2)
+            : '      '}
+          % Left:{' '}
+          {faces.length > 0
+            ? (faces[0].leftEyeOpenProbability * 100).toFixed(2)
+            : '      '}
+          % Right:{' '}
+          {faces.length > 0
+            ? (faces[0].rightEyeOpenProbability * 100).toFixed(2)
+            : '      '}
+          %
+        </Text>
+        <TouchableOpacity
+          onPress={takePic}
+          style={{
+            flex: 0.15,
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 30,
+            width: '80%',
+            backgroundColor: '#DDD',
+          }}
+        >
+          <Text style={{ fontSize: 25 }}>Snap</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 };
 
 export default CameraScreen;
