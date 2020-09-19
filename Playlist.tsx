@@ -1,9 +1,10 @@
 const axios = require('axios');
 
-// export default function createPlaylist(image base64, smileprob, **facedata, ...  ){
     
 
-async function createPlaylist(){
+export default function createPlaylist(base64:string, face:any){
+  return new Promise(async (resolve, reject) => {
+
 //figure out TARGETPARAMS
 // []
 
@@ -139,7 +140,7 @@ async function createPlaylist(){
     //     console.error(error)
     // })
 // }
-
+  })
 }
 
-createPlaylist()
+
