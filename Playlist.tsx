@@ -1,17 +1,13 @@
-const axios = require('axios');
+const axios = require("axios");
 
 // export default function createPlaylist(base64:string, face:any){
 function createPlaylist(){
   return new Promise(async (resolve, reject) => {
+    //figure out TARGETPARAMS
+    // []
 
-//figure out TARGETPARAMS
-// []
-
-
-
-// []
-// (outputs {target_energy, target_danceability...})
-
+    // []
+    // (outputs {target_energy, target_danceability...})
 
 		//handle auth...
 		function getUserPass(){
@@ -221,8 +217,8 @@ function createPlaylist(){
     // .catch((error) => {
     //     console.error(error)
     // })
-// }
-  })
+    // }
+  });
 }
 
 
