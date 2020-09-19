@@ -33,7 +33,11 @@ const MyStack = () => {
           component={CameraScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Playlist" component={PlaylistScreen} />
+        <Stack.Screen
+          name="Playlist"
+          component={PlaylistScreen}
+          options={{ title: "Playlist Creation", headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
