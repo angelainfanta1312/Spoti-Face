@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as FaceDetector from 'expo-face-detector';
 
-const CameraScreen = () => {
+const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faces, setFaces] = useState([]);
 
@@ -64,7 +64,7 @@ const CameraScreen = () => {
         %
       </Text>
       <TouchableOpacity
-        onPress={takePic}
+        onPress={() => navigation.navigate('Information')}
         style={{
           flex: 0.15,
           alignItems: 'center',

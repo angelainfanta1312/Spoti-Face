@@ -23,7 +23,7 @@ const MyStack = () => {
       <Stack.Navigator>
         <Stack.Screen
           name='Landing'
-          component={CameraScreen}
+          component={HomeScreen}
           options={{ title: 'Welcome' }}
         />
         <Stack.Screen
@@ -36,7 +36,7 @@ const MyStack = () => {
           component={HomeScreen}
           options={{ title: 'Get Started' }}
         />
-        <Stack.Screen name='Camera' component={LandingScreen} />
+        <Stack.Screen name='Camera' component={CameraScreen} />
         <Stack.Screen name='Playlist' component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
