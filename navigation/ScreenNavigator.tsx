@@ -24,7 +24,7 @@ const MyStack = () => {
         <Stack.Screen
           name='Landing'
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
+          options={{ title: 'Welcome to Spotiface', headerShown: false }}
         />
         <Stack.Screen
           name='Info'
@@ -36,7 +36,7 @@ const MyStack = () => {
           component={HomeScreen}
           options={{ title: 'Get Started' }}
         />
-        <Stack.Screen name='Camera' component={CameraScreen} />
+        <Stack.Screen name='Camera' component={CameraScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Playlist' component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -45,10 +45,12 @@ const MyStack = () => {
 
 const HomeScreen = ({ navigation }: any) => {
   return (
-    <Button
-      title="Go to Jane's profile"
-      onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
-    />
+    <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+      <Button
+        title="Go to Jane's profile"
+        onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
+      />
+    </View>
   );
 };
 const ProfileScreen = () => {

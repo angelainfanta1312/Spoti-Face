@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 const LandingScreen = ({ navigation }: any) => {
-  return <Text>Suckamah Balls</Text>;
+  return <Text>Welcome to Spotiface</Text>;
 };
 
 export default LandingScreen;
