@@ -1,17 +1,21 @@
-const axios = require("axios");
+const axios = require('axios');
 
 // export default function createPlaylist(base64:string, face:any){
 function createPlaylist(){
   return new Promise(async (resolve, reject) => {
-    //figure out TARGETPARAMS
-    // []
 
-    // []
-    // (outputs {target_energy, target_danceability...})
+//figure out TARGETPARAMS
+// []
+
+
+
+// []
+// (outputs {target_energy, target_danceability...})
+
 
 		//handle auth...
 		function getUserPass(){
-				let auth_token = "BQBqjl_D8pqoQeoKQzG5ybwcJqfwYxRXhC-l9qBonepvPmuhc6tAheWt7j7F27jIslYEVkBQT58b2nv8KdY_-uKEf5IqfPNxH4r5BEXDhzbRmwtGJWAHuYadiBpTXHV59P4N7lMMnE6A_2gP9PY-F7fOa_6MYqpUnnq1UGrQbbH2gGsZiFCc0dcezuhHyvULPHXWKDy3HXxRiRVuGHheCBTB1ghCDsQDy85xZJnYuzS8Cm09GQgezsAPDtlez36q76sOLQPLwywVq4SL"
+				let auth_token = "BQD4siyAMYU8Bd6Emoxj3wT05Z6N1Ac-q277xDUPaBbMdT81Hk5iPhSqkZ7OeD-l8-Nw1C2XEmtouq2xr3v71HbcPBAy3C-fPBqjhAx1BQYXH-KzvMiTNvboC0CmjdKNp8lfQ0NSEoL24YNB-x1TbiKSbz8_avzJEFkLjz-eABJwy-stTjrKeIG8ZH5oyGkkpKL91OEIJy2wVAsRl7fviDb3RWvsuhU56WOqc1Gsq9SwpyGgy41Xs6EXwpPyR9SP5uwJzSXKZ4Ma4obT"
 				let user_name = "noteaholic"
 				return [auth_token, user_name]
 		} 
@@ -25,11 +29,6 @@ function createPlaylist(){
 		let playlist_id = 0
 		let topTracks = []
 		let params = {"valence" : 1.0}
-
-	//Figure out SEED
-			//X topArtists we probably dont need, right
-		// topGenres //TODO (maybe)
-		// topTracks = getTopUserTracks()
 
 		// #Gets the uri of the top tracks
 		await axios.get('https://api.spotify.com/v1/me/top/tracks', {
@@ -75,24 +74,7 @@ function createPlaylist(){
 						console.error(error)
 						reject("Couldn't get the audio features")
 				})
-				// if(this is emotionally appropriate)
-				//     emotionTopTracks.push(data[i]["uri"])
-				//     console.log(data[i]["uri"])
-		}
-		// emotionTopTracks = {topTracks.filter( for emotionally appropriate songs using targetParams )}
-		//         (how to do this)
-		//         for each track in toptracks:
-		//             features = spotify.getAudioFeatures(track)
-		//             run cross(targetParams, features)
-		//             if ^ good enough:
-		//                 keep
-		//             else:
-		//                 toss
-
-			// use some of emotionTopTracks for seed when generating
-
-
-
+	 
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
 		console.log(seed_track)
@@ -125,7 +107,6 @@ function createPlaylist(){
 			'Authorization' : 'Bearer ' + auth_token,
 		},
 		params: {
-			// "seed_tracks" : [track, track2, track3],
 			"limit" : size*newness,
 			"seed_tracks" : seed_track,
 			"seed_artists" : "",
@@ -193,22 +174,16 @@ function createPlaylist(){
 
 		// addTracks(tracks)
 		//Should add all tracks
-		for(let i =0; i < emotionTopTracks.length; i++){
-			await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":[emotionTopTracks[i]]}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-				.then((res) => {
-					console.log(res.data)
-					console.log("Added data")
-				})
-				.catch((error) => {
-					console.error(error)
-					reject("Couldn't add the song to the playlist")
+		await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":emotionTopTracks}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+			.then((res) => {
+				console.log(res.data)
+				console.log("Added data")
 			})
-		}
+			.catch((error) => {
+				console.error(error)
+				reject("Couldn't add the song to the playlist")
+		})
     
-
-
-    // setPicture(pic)
-
     //Should set picture
     // axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
     // .then((res) => {
@@ -217,8 +192,8 @@ function createPlaylist(){
     // .catch((error) => {
     //     console.error(error)
     // })
-    // }
-  });
+// }
+  })
 }
 
 
