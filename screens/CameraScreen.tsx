@@ -13,7 +13,7 @@ const CameraScreen = ({ navigation }) => {
   const [faces, setFaces] = useState([]);
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
-  this.camera = null;
+  
   //TODO move this to earlier screen
   useEffect(() => {
     (async () => {
@@ -92,22 +92,18 @@ const CameraScreen = ({ navigation }) => {
             justifyContent: "space-around",
             alignItems: "flex-end",
             paddingBottom: 10,
+            backgroundColor: '#FFF'
           }}
         >
-<<<<<<< HEAD
           <Icon name="ios-close" size={50} onPress={() => deny()}></Icon>
           <Icon name="ios-checkmark" size={50} onPress={() => confirm()}></Icon>
-=======
-          <Icon name='ios-close' size={50} onPress={() => deny()}></Icon>
-          <Icon name='ios-checkmark' size={50} onPress={() => confirm()}></Icon>
->>>>>>> 5cc3c31aeb7ee6862dc488c4216181f808e6c998
         </View>
       </View>
     );
   } else {
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' , backgroundColor: '#000'}}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
@@ -119,27 +115,14 @@ const CameraScreen = ({ navigation }) => {
             }}
           />
         </View>
-        {/* <Text style={{ fontSize: 18, marginHorizontal: 20, marginBottom: 0 }}>
-          Smile:{' '}
-          {faces.length > 0
-            ? (faces[0].smilingProbability * 100).toFixed(2)
-            : '      '}
-          % Left:{' '}
-          {faces.length > 0
-            ? (faces[0].leftEyeOpenProbability * 100).toFixed(2)
-            : '      '}
-          % Right:{' '}
-          {faces.length > 0
-            ? (faces[0].rightEyeOpenProbability * 100).toFixed(2)
-            : '      '}
-          %
-        </Text> */}
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
             alignItems: "flex-end",
+            alignContent: 'center',
             paddingBottom: 20,
+            backgroundColor: "#000"
           }}
         >
           <TouchableOpacity
@@ -149,10 +132,11 @@ const CameraScreen = ({ navigation }) => {
               borderColor: "rgba(0,0,0,0.2)",
               alignItems: "center",
               justifyContent: "center",
-              width: 60,
-              height: 60,
+              width: 70,
+              height: 70,
+              margin : 10,
               backgroundColor: faceOnscreen ? "green" : "red",
-              borderRadius: 30,
+              borderRadius: 50,
             }}
           >
             {/* <Icon name={'chevron-right'} size={30} color='#01a699' /> */}
