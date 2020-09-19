@@ -35,7 +35,6 @@ const CameraScreen = ({ navigation }) => {
     } else {
       console.log('camera not set.');
     }
-    
   };
 
   let deny = () => {
@@ -45,36 +44,31 @@ const CameraScreen = ({ navigation }) => {
   };
 
   let confirm = () => {
-    if(photo == null){
-      console.error("Photo not taken or set!")
-      return
+    if (photo == null) {
+      console.error('Photo not taken or set!');
+      return;
     }
-
 
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     })
-    .then(({ faces, image }) => {
-      setFaces(faces);
-      //createPlaylist(face, photo.base64).then( // stop loading on lastscreen).then(stop loading)
-    })
-    .catch((error) => console.log('Failed to detect. error: \n' + error));
+      .then(({ faces, image }) => {
+        setFaces(faces);
+        //createPlaylist(face, photo.base64).then( // stop loading on lastscreen).then(stop loading)
+      })
+      .catch((error) => console.log('Failed to detect. error: \n' + error));
 
     //Move to last screen (send it promise)
     //FOR NOW,
     setPressed(false);
-
-  }
+  };
 
   let onFaceDetected = (faces) => {
-    if (faces.faces.length > 0)
-      setFaceOnscreen(true);
-    else
-      setFaceOnscreen(false);
-
-  }
+    if (faces.faces.length > 0) setFaceOnscreen(true);
+    else setFaceOnscreen(false);
+  };
 
   if (pressed) {
     return (
@@ -155,7 +149,7 @@ const CameraScreen = ({ navigation }) => {
             justifyContent: 'center',
             margin: 30,
             width: '80%',
-            backgroundColor: faceOnscreen ? 'green' : 'red'
+            backgroundColor: faceOnscreen ? 'green' : 'red',
           }}
         >
           <Text style={{ fontSize: 25 }}>Snap</Text>
