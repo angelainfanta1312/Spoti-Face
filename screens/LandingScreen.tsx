@@ -1,16 +1,18 @@
-import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
-import * as Font from "expo-font";
-import { Asset } from "expo-asset";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
 
 const onboard1 = Asset.fromModule(
-  require("../assets/images/onboardscreen1.png")
+  require('../assets/images/onboardscreen1.png')
 );
 const iconnotround = Asset.fromModule(
-  require("../assets/images/iconnotrounded.png")
+  require('../assets/images/iconnotrounded.png')
 );
 import {
   StyleSheet,
@@ -21,8 +23,8 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { Constants } from "expo-camera";
+} from 'react-native';
+import { Constants } from 'expo-camera';
 
 // (async () => await Font.loadAsync({
 //   // Load a font `Montserrat` from a static resource
@@ -56,9 +58,9 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
-              <Ionicons name="ios-beer" size={32} color="white" />
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="white" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="green" />
             </View>
           </TouchableOpacity>
         </View>
@@ -83,9 +85,9 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="white" />
-              <Ionicons name="ios-beer" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="white" />
+              <Icon name="circle-thin" size={32} color="greeen" />
             </View>
           </TouchableOpacity>
         </View>
@@ -96,7 +98,7 @@ const LandingScreen = ({ navigation }: any) => {
       <View style={styles.container}>
         <View style={styles.headerContainer}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Camera", { name: "Jane" })}
+            onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
           >
             <Text style={styles.titleTextFirst}>step 3: </Text>
             <Text style={styles.titleTextSecond}>blah blah blah</Text>
@@ -112,9 +114,9 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="white" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="white" />
             </View>
 
             <Text style={styles.titleTextFourth}>
@@ -130,9 +132,9 @@ const LandingScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1DB954",
+    backgroundColor: '#1DB954',
     //alignItems: 'center',
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     paddingLeft: 15,
     paddingTop: 60,
   },
@@ -143,42 +145,42 @@ const styles = StyleSheet.create({
   },
   titleTextFirst: {
     fontSize: 88,
-    fontWeight: "normal",
-    color: "white",
+    fontWeight: 'normal',
+    color: 'white',
     paddingLeft: 15,
   },
   titleTextSecond: {
     fontSize: 56,
-    fontWeight: "400",
-    color: "white",
+    fontWeight: '400',
+    color: 'white',
     paddingLeft: 15,
     paddingTop: 10,
   },
   titleTextSecond2: {
     fontSize: 44,
-    fontWeight: "400",
-    color: "white",
+    fontWeight: '400',
+    color: 'white',
     paddingLeft: 5,
     paddingTop: 10,
   },
   titleTextThird: {
     fontSize: 24,
-    fontWeight: "400",
-    color: "white",
+    fontWeight: '400',
+    color: 'white',
     paddingLeft: 15,
   },
   footerWrapper: {
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-around",
-    flexDirection: "row",
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
     paddingTop: 45,
     paddingHorizontal: 25,
   },
   titleTextFourth: {
     fontSize: 20,
-    fontWeight: "400",
-    color: "white",
+    fontWeight: '400',
+    color: 'white',
     paddingLeft: 15,
   },
 });
