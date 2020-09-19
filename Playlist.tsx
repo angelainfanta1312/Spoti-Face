@@ -3,7 +3,7 @@ const axios = require('axios');
 // export default function createPlaylist(image base64, smileprob, **facedata, ...  ){
     
 
-function createPlaylist(){
+async function createPlaylist(){
 //figure out TARGETPARAMS
 // []
 
@@ -36,7 +36,7 @@ function createPlaylist(){
     // topTracks = getTopUserTracks()
 
     // #Gets the uri of the top tracks
-    axios.get('https://api.spotify.com/v1/me/top/tracks', {
+    await axios.get('https://api.spotify.com/v1/me/top/tracks', {
         headers: {
             'Authorization' : 'Bearer ' + auth_token,
         }
@@ -58,14 +58,15 @@ function createPlaylist(){
         
         let split = topTracks[i].split(":")
         let track_id = split[2]
-        axios.get('https://api.spotify.com/v1/audio-features/' + track_id, {
+        await axios.get('https://api.spotify.com/v1/audio-features/' + track_id, {
         headers: {
             'Authorization' : 'Bearer ' + auth_token,
         }
         })
         .then((res) => {
             let features = res.data
-            if(features["valence"] > .5){
+            console.log(features["valence"])
+            if(features["valence"] > .7){
                 emotionTopTracks.push(topTracks[i])
             }
             // console.log(res.data)
@@ -100,10 +101,11 @@ function createPlaylist(){
 
     // createPlaylist ()
     //Creates a playlist
-    axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+    await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
         .then((res) => {
             console.log(res.data)
-            playlist_id = res["id"]
+            playlist_id = res.data["id"]
+            console.log(playlist_id)
         })
         .catch((error) => {
         console.error(error)
@@ -112,15 +114,18 @@ function createPlaylist(){
 
     // addTracks(tracks)
     //Should add all tracks
-    emotionTopTracks.forEach(function(track_uri) {
-        axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":[track_uri]}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+    for(let i =0; i < emotionTopTracks.length; i++){
+        await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":[emotionTopTracks[i]]}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
             .then((res) => {
                 console.log(res.data)
+                console.log("Added data")
             })
             .catch((error) => {
                 console.error(error)
         })
-    });
+        
+    }
+    
 
 
     // setPicture(pic)
