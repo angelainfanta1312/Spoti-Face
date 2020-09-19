@@ -1,18 +1,23 @@
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
-import * as Font from 'expo-font';
-import { Asset } from 'expo-asset';
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
+import * as Font from "expo-font";
+import { Asset } from "expo-asset";
 
 const onboard1 = Asset.fromModule(
-  require('../assets/images/onboardscreen1.png')
+  require("../assets/images/onboardscreen1.png")
 );
+
+const onboard2 = Asset.fromModule(
+  require("../assets/images/onboardscreen2white.png")
+);
+
 const iconnotround = Asset.fromModule(
-  require('../assets/images/iconnotrounded.png')
+  require("../assets/images/iconnotrounded.png")
 );
 import {
   StyleSheet,
@@ -23,8 +28,8 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-} from 'react-native';
-import { Constants } from 'expo-camera';
+} from "react-native";
+import { Constants } from "expo-camera";
 
 // (async () => await Font.loadAsync({
 //   // Load a font `Montserrat` from a static resource
@@ -49,7 +54,7 @@ const LandingScreen = ({ navigation }: any) => {
 
             <Image
               source={{ uri: onboard1.uri }}
-              style={{ width: 400, height: 400 }}
+              style={{ width: 425, height: 425 }}
             />
 
             <Text style={styles.titleTextThird}>
@@ -74,13 +79,13 @@ const LandingScreen = ({ navigation }: any) => {
             <Text style={styles.titleTextSecond2}>we analyze your face</Text>
 
             <Image
-              source={{ uri: onboard1.uri }}
-              style={{ width: 400, height: 400 }}
+              source={{ uri: onboard2.uri }}
+              style={{ width: 375, height: 375 }}
             />
 
             <Text style={styles.titleTextThird}>
-              using your facial landmarks and google vision
-              technology, we survey your likely emotions
+              using your facial landmarks and google vision technology, we
+              survey your likely emotions
             </Text>
 
             <View style={styles.footerWrapper}>
@@ -96,21 +101,17 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Camera")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
             <Text style={styles.titleTextFirst}>Step 3: </Text>
             <Text style={styles.titleTextSecond}>create your playlist</Text>
 
             <Text style={styles.titleTextThird}>
-              extrapolating from your current mood and your music taste, we create a brand new unique playlist
+              extrapolating from your current mood and your music taste, we
+              create a brand new unique playlist
             </Text>
             <Text style={styles.subTitleTextThird}>just for you.</Text>
 
-
-            <Text style={styles.titleTextThirdish1}>
-              tap to get started 
-            </Text>
+            <Text style={styles.titleTextThirdish1}>tap to get started</Text>
             <Text style={styles.titleTextThirdish2}>
               (we just need access to your camera.)
             </Text>
@@ -120,7 +121,6 @@ const LandingScreen = ({ navigation }: any) => {
               <Icon name="circle-thin" size={32} color="green" />
               <Icon name="circle-thin" size={32} color="white" />
             </View>
-            
           </TouchableOpacity>
         </View>
       </View>
@@ -131,7 +131,7 @@ const LandingScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1DB954',
+    backgroundColor: "#1DB954",
     //alignItems: 'center',
     justifyContent: "flex-start",
     paddingTop: 60,
@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
   },
   titleTextFirst: {
     fontSize: 88,
-    fontWeight: 'normal',
-    color: 'white',
+    fontWeight: "normal",
+    color: "white",
     paddingLeft: 15,
   },
   titleTextSecond: {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     color: "white",
 
     paddingTop: 10,
-    textAlign: 'center'
+    textAlign: "center",
   },
   titleTextSecond2: {
     fontSize: 40,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingHorizontal: 10,
     paddingTop: 10,
-    textAlign: 'center'
+    textAlign: "center",
   },
   titleTextThird: {
     fontSize: 24,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingHorizontal: 15,
     paddingVertical: 30,
-    textAlign: 'center'
+    textAlign: "center",
   },
   titleTextThirdish1: {
     fontSize: 20,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingTop: 90,
     paddingHorizontal: 15,
-    textAlign: 'center'
+    textAlign: "center",
   },
   titleTextThirdish2: {
     fontSize: 18,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingHorizontal: 15,
     paddingBottom: 50,
-    textAlign: 'center'
+    textAlign: "center",
   },
   subTitleTextThird: {
     fontSize: 24,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 50,
     paddingBottom: 100,
-    textAlign: 'center'
+    textAlign: "center",
   },
   footerWrapper: {
     flexWrap: "wrap",
@@ -207,8 +207,8 @@ const styles = StyleSheet.create({
   },
   titleTextFourth: {
     fontSize: 20,
-    fontWeight: '400',
-    color: 'white',
+    fontWeight: "400",
+    color: "white",
     paddingLeft: 15,
   },
 });
