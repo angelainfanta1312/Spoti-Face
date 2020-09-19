@@ -75,7 +75,7 @@ const CameraScreen = ({ navigation }) => {
   if (pressed) {
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+        style={{ flex: 1, justifyContent: 'center', alignContent: 'center', backgroundColor: '#000' }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
@@ -91,12 +91,12 @@ const CameraScreen = ({ navigation }) => {
             flexDirection: "row",
             justifyContent: "space-around",
             alignItems: "flex-end",
-            paddingBottom: 10,
-            backgroundColor: '#FFF'
+            paddingBottom: 20,
+            backgroundColor: '#000'
           }}
         >
-          <Icon name="ios-close" size={50} onPress={() => deny()}></Icon>
-          <Icon name="ios-checkmark" size={50} onPress={() => confirm()}></Icon>
+          <Icon name="ios-close" size={65} onPress={() => deny()} style={{color: 'red'}}></Icon>
+          <Icon name="ios-checkmark" size={65} onPress={() => confirm()} style= {{color: 'green'}}></Icon>
         </View>
       </View>
     );
