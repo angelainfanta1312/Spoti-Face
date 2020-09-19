@@ -23,7 +23,7 @@ const MyStack = () => {
       <Stack.Navigator>
         <Stack.Screen
           name='Landing'
-          component={HomeScreen}
+          component={LandingScreen}
           options={{ title: 'Welcome to Spotiface', headerShown: false }}
         />
         <Stack.Screen
