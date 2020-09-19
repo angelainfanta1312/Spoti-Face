@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
-import * as FaceDetector from 'expo-face-detector';
-import Icon from 'react-native-vector-icons/Ionicons';
-import createPlaylist from "../Playlist"
+import React, { useState, useEffect } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import { Camera } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
+import Icon from "react-native-vector-icons/Ionicons";
+import createPlaylist from "../Playlist";
 //import createPlaylist from '../Playlist'
 
-var photo = null;
+var photo: any = null;
 
 const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [faces, setFaces] = useState([]);
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
-
+  this.camera = null;
   //TODO move this to earlier screen
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -33,7 +33,7 @@ const CameraScreen = ({ navigation }) => {
       this.camera.pausePreview();
       setPressed(true);
     } else {
-      console.log('camera not set.');
+      console.log("camera not set.");
     }
   };
 
@@ -45,7 +45,7 @@ const CameraScreen = ({ navigation }) => {
 
   let confirm = () => {
     if (photo == null) {
-      console.error('Photo not taken or set!');
+      console.error("Photo not taken or set!");
       return;
     }
 
@@ -58,7 +58,7 @@ const CameraScreen = ({ navigation }) => {
         setFaces(faces);
         //createPlaylist("dummy", photo.base64).then( // stop loading on lastscreen).then(stop loading)
       })
-      .catch((error) => console.log('Failed to detect. error: \n' + error));
+      .catch((error) => console.log("Failed to detect. error: \n" + error));
 
     //Move to last screen (send it promise)
     //FOR NOW,
@@ -73,12 +73,12 @@ const CameraScreen = ({ navigation }) => {
   if (pressed) {
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+        style={{ flex: 1, justifyContent: "center", alignContent: "center" }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
             style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
-            type='front'
+            type="front"
             ref={(ref) => {
               this.camera = ref;
             }}
@@ -98,28 +98,28 @@ const CameraScreen = ({ navigation }) => {
         <Text style={{ fontSize: 25 }}>Snap</Text>
     </TouchableOpacity> */}
         <View style={{ paddingLeft: 15, paddingBottom: 10 }}>
-          <Icon name='ios-beer' size={30} onPress={() => deny()}></Icon>
+          <Icon name="ios-beer" size={30} onPress={() => deny()}></Icon>
         </View>
         <View
           style={{
-            position: 'absolute',
+            position: "absolute",
             marginBottom: 0,
-            justifyContent: 'flex-end',
+            justifyContent: "flex-end",
           }}
         >
-          <Icon name='ios-beer' size={30} onPress={() => confirm()}></Icon>
+          <Icon name="ios-beer" size={30} onPress={() => confirm()}></Icon>
         </View>
       </View>
     );
   } else {
     return (
       <View
-        style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}
+        style={{ flex: 1, justifyContent: "center", alignContent: "center" }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
           <Camera
             style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
-            type='front'
+            type="front"
             onFacesDetected={onFaceDetected}
             ref={(ref) => {
               this.camera = ref;
@@ -127,29 +127,29 @@ const CameraScreen = ({ navigation }) => {
           />
         </View>
         <Text style={{ fontSize: 18, marginHorizontal: 20, marginBottom: 0 }}>
-          Smile:{' '}
+          Smile:{" "}
           {faces.length > 0
             ? (faces[0].smilingProbability * 100).toFixed(2)
-            : '      '}
-          % Left:{' '}
+            : "      "}
+          % Left:{" "}
           {faces.length > 0
             ? (faces[0].leftEyeOpenProbability * 100).toFixed(2)
-            : '      '}
-          % Right:{' '}
+            : "      "}
+          % Right:{" "}
           {faces.length > 0
             ? (faces[0].rightEyeOpenProbability * 100).toFixed(2)
-            : '      '}
+            : "      "}
           %
         </Text>
         <TouchableOpacity
           onPress={takePic}
           style={{
             flex: 0.15,
-            alignItems: 'center',
-            justifyContent: 'center',
+            alignItems: "center",
+            justifyContent: "center",
             margin: 30,
-            width: '80%',
-            backgroundColor: faceOnscreen ? 'green' : 'red',
+            width: "80%",
+            backgroundColor: faceOnscreen ? "green" : "red",
           }}
         >
           <Text style={{ fontSize: 25 }}>Snap</Text>
