@@ -32,13 +32,29 @@ const PlaylistScreen = ({
       <View style={styles.headerContainer}>
         <Image
           source={{ uri: iconround.uri }}
-          style={{ width: 150, height: 150 }}
+          style={{
+            width: 100,
+            height: 100,
+            alignItems: "center",
+            paddingBottom: 25,
+            display: "flex",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
         />
 
-        <Image
-          source={{ uri: spottext.uri }}
-          style={{ width: 150, height: 150 }}
-        />
+        <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+          <Image
+            source={{ uri: spottext.uri }}
+            style={{
+              width: 225,
+              height: 60,
+              display: "flex",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          />
+        </View>
 
         <Text style={styles.titleTextFirst}>your playlist</Text>
 
@@ -90,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: "normal",
     color: "white",
-    paddingLeft: 15,
+    textAlign: "center",
   },
   titleTextSecond: {
     fontSize: 56,
@@ -139,7 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   buttonsStyle: {
-    paddingTop: 50,
+    paddingTop: 25,
   },
 });
 
