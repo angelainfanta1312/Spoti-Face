@@ -1,16 +1,18 @@
-import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
-import * as Font from "expo-font";
-import { Asset } from "expo-asset";
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
+import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
 
 const onboard1 = Asset.fromModule(
-  require("../assets/images/onboardscreen1.png")
+  require('../assets/images/onboardscreen1.png')
 );
 const iconnotround = Asset.fromModule(
-  require("../assets/images/iconnotrounded.png")
+  require('../assets/images/iconnotrounded.png')
 );
 import {
   StyleSheet,
@@ -21,8 +23,8 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { Constants } from "expo-camera";
+} from 'react-native';
+import { Constants } from 'expo-camera';
 
 // (async () => await Font.loadAsync({
 //   // Load a font `Montserrat` from a static resource
@@ -55,9 +57,9 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
-              <Ionicons name="ios-beer" size={32} color="white" />
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="white" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="green" />
             </View>
           </TouchableOpacity>
         </View>
@@ -82,9 +84,9 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="white" />
-              <Ionicons name="ios-beer" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="white" />
+              <Icon name="circle-thin" size={32} color="green" />
             </View>
           </TouchableOpacity>
         </View>
@@ -114,9 +116,9 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="green" />
-              <Ionicons name="ios-beer" size={32} color="white" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="green" />
+              <Icon name="circle-thin" size={32} color="white" />
             </View>
             
           </TouchableOpacity>
@@ -129,7 +131,7 @@ const LandingScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1DB954",
+    backgroundColor: '#1DB954',
     //alignItems: 'center',
     justifyContent: "flex-start",
     paddingTop: 60,
@@ -141,8 +143,8 @@ const styles = StyleSheet.create({
   },
   titleTextFirst: {
     fontSize: 88,
-    fontWeight: "normal",
-    color: "white",
+    fontWeight: 'normal',
+    color: 'white',
     paddingLeft: 15,
   },
   titleTextSecond: {
@@ -166,7 +168,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     paddingHorizontal: 15,
-    paddingVertical: 80,
+    paddingVertical: 30,
     textAlign: 'center'
   },
   titleTextThirdish1: {
@@ -182,6 +184,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     paddingHorizontal: 15,
+    paddingBottom: 50,
     textAlign: 'center'
   },
   subTitleTextThird: {
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: "white",
     paddingHorizontal: 15,
-    paddingTop: 20,
+    paddingTop: 50,
     paddingBottom: 100,
     textAlign: 'center'
   },
@@ -204,8 +207,8 @@ const styles = StyleSheet.create({
   },
   titleTextFourth: {
     fontSize: 20,
-    fontWeight: "400",
-    color: "white",
+    fontWeight: '400',
+    color: 'white',
     paddingLeft: 15,
   },
 });
