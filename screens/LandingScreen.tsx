@@ -11,11 +11,13 @@ import {
   Text,
   Alert,
 } from 'react-native';
+import CameraScreen from './CameraScreen'
+
 
 const LandingScreen = ({ navigation }: any) => {
   const [state, setState] = React.useState(0);
   if (state === 0) {
-    return <Text>This is state {state}</Text>;
+    return CameraScreen(navigation);
   } else if (state === 1) {
     return <Text>This is state {state}</Text>;
   } else {
