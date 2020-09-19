@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // export default function createPlaylist(base64:string, face:any){
-export default function createPlaylist(image_data: string, face: any){
+export default function createPlaylist(image_data: string, sp: any){
     return new Promise(async (resolve, reject) => {
 
         //figure out TARGETPARAMS
@@ -13,7 +13,8 @@ export default function createPlaylist(image_data: string, face: any){
         // (outputs {target_energy, target_danceability...})
 
         //for now, 
-        let params = {valence: face.smilingProbability}
+        let params = {valence: sp}
+        console.log("Smile Prob: " + sp)
         let variability = .15;
 
 
@@ -84,7 +85,7 @@ export default function createPlaylist(image_data: string, face: any){
                     reject("Couldn't get the audio features")
             })
         }
-    
+
         //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
@@ -161,15 +162,15 @@ export default function createPlaylist(image_data: string, face: any){
 				reject("Couldn't add the song to the playlist")
 		})
     
-    //Should set picture
-    // axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-    // .then((res) => {
-    //     console.log(res.data)
-    // })
-    // .catch((error) => {
-    //     console.error(error)
-    // })
-    // }
+        //Should set picture
+        axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    
 
         resolve(playlist_id)
 
