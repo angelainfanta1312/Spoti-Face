@@ -74,7 +74,7 @@ function createPlaylist(){
 						console.error(error)
 						reject("Couldn't get the audio features")
 				})
-	 
+			}
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
 		console.log(seed_track)
