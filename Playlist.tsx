@@ -69,10 +69,9 @@ playlist_id = 0
         .catch((error) => {
             console.error(error)
         })
-        
-        emotionTopTracks.push(data[i]["uri"])
-        console.log(data[i]["uri"])
-
+        if(this is emotionally appropriate)
+            emotionTopTracks.push(data[i]["uri"])
+            console.log(data[i]["uri"])
 
     emotionTopTracks = {topTracks.filter( for emotionally appropriate songs using targetParams )}
             (how to do this)
@@ -109,7 +108,6 @@ playlist_id = 0
     addTracks(tracks)
     //Should add all tracks
     newTracks.forEach(function(track_uri) {
-
         axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":[track_uri]}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
             .then((res) => {
                 console.log(res.data)
