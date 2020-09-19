@@ -65,8 +65,8 @@ const CameraScreen = ({ navigation }) => {
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     }).then(({ faces, image }) => {
       setPressed(false);
-      let playlistPromise = createPlaylist(photo.base64, faces[0])
-      navigation.navigate('Playlist', {playlistPromise});
+      //let prom = createPlaylist(photo.base64, faces[0])
+      navigation.navigate('Playlist', {base64: photo.base64, face: faces[0]});
     })
     .catch((error) => console.log('Failed to detect. error: \n' + error));
   };

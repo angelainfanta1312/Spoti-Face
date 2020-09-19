@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // export default function createPlaylist(base64:string, face:any){
-export default function createPlaylist(image_data: string, face: any){
+export default function createPlaylist(image_data: string, sp: any){
     return new Promise(async (resolve, reject) => {
 
         //figure out TARGETPARAMS
@@ -13,13 +13,14 @@ export default function createPlaylist(image_data: string, face: any){
         // (outputs {target_energy, target_danceability...})
 
         //for now, 
-        let params = {valence: face.smilingProbability}
+        let params = {valence: sp}
+        console.log("Smile Prob: " + sp)
         let variability = .15;
 
 
 		//handle auth...
 		function getUserPass(){
-				let auth_token = "BQD4siyAMYU8Bd6Emoxj3wT05Z6N1Ac-q277xDUPaBbMdT81Hk5iPhSqkZ7OeD-l8-Nw1C2XEmtouq2xr3v71HbcPBAy3C-fPBqjhAx1BQYXH-KzvMiTNvboC0CmjdKNp8lfQ0NSEoL24YNB-x1TbiKSbz8_avzJEFkLjz-eABJwy-stTjrKeIG8ZH5oyGkkpKL91OEIJy2wVAsRl7fviDb3RWvsuhU56WOqc1Gsq9SwpyGgy41Xs6EXwpPyR9SP5uwJzSXKZ4Ma4obT"
+				let auth_token = "BQDbIqrqQKP205kRpHoWoCeTMpmIfP3EuE-zTH6HovZTH0ezm2Zafh970013doBX4NaxBTNB4bHU5hGQ9XT61YlMZLNzuth2mYm8XU9scr5Vq0dwo4qYuSc7JXAIrUN3_3pD-FvAVOJ_rLGn_dUyySn5QNE0-OpsOm00_GPUKRyekmOnHmY9AdmNTGLRVeuIAz5lJHTTjNRS7PiM94to0xTsx_qmlb6ipOOwIoM3ZUyngarR9Jpmmk3NEtppi7mZwisIRBoyl1rcUo9d"
 				let user_name = "noteaholic"
 				return [auth_token, user_name]
 		} 
@@ -29,7 +30,7 @@ export default function createPlaylist(image_data: string, face: any){
 		let auth = getUserPass()
 		let auth_token = auth[0]
 		let user_name = auth[1]
-        let playlist_name = "bufftest1"
+        let playlist_name = "Your Spotiface Playlist"
         let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
         let size = 20 //not really though
         
@@ -84,7 +85,7 @@ export default function createPlaylist(image_data: string, face: any){
                     reject("Couldn't get the audio features")
             })
         }
-    
+
         //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
@@ -161,15 +162,15 @@ export default function createPlaylist(image_data: string, face: any){
 				reject("Couldn't add the song to the playlist")
 		})
     
-    //Should set picture
-    // axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
-    // .then((res) => {
-    //     console.log(res.data)
-    // })
-    // .catch((error) => {
-    //     console.error(error)
-    // })
-    // }
+        //Should set picture
+        axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    
 
         resolve(playlist_id)
 

@@ -21,14 +21,12 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
+import createPlaylist from '../Playlist';
 
 
-const PlaylistScreen = ({
-  navigation,
-  playlistPromise,
-}: {
-  navigation: any;
-  playlistPromise: any;
+const PlaylistScreen = (
+{ navigation,
+  route
 }) => {
 	const discovery = {
 		authorizationEndpoint: 'https://accounts.spotify.com/authorize',
@@ -58,15 +56,16 @@ const PlaylistScreen = ({
   var link = null;
   const [state, setState] = React.useState(0);
   const render = () => {
+    console.log(state)
     if (state === 0) {
-      renderLoading();
+      return renderLoading();
     } else if (state === 1) {
-      renderLoaded();
+      return renderLoaded();
     } else {
-      renderError();
+      return renderError();
     }
   };
-  playlistPromise
+    createPlaylist(route.params.base64, route.params.face)
     .then((link: any) => {
       link = link;
       setState(1);
