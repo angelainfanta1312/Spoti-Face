@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import createPlaylist from "../Playlist";
 //import createPlaylist from '../Playlist'
 
-var photo = null;
+var photo: any = null;
 
 const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -43,26 +43,32 @@ const CameraScreen = ({ navigation }) => {
     photo = null;
   };
 
-  let confirm = () => {
+  let confirm = async () => {
     if (photo == null) {
       console.error("Photo not taken or set!");
       return;
     }
 
-    FaceDetector.detectFacesAsync(photo.uri, {
+    let faceData = FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
-    })
+    });
+
+    faceData
       .then(({ faces, image }) => {
         setFaces(faces);
+<<<<<<< Updated upstream
         //createPlaylist("dummy", photo.base64).then( // stop loading on lastscreen).then(stop loading)
+=======
+        //createPlaylist(faces[0], photo.base64).then( // stop loading on lastscreen).then(stop loading)
+>>>>>>> Stashed changes
       })
       .catch((error) => console.log("Failed to detect. error: \n" + error));
 
     //Move to last screen (send it promise)
     //FOR NOW,
-    setPressed(false);
+    setPressed(true);
   };
 
   let onFaceDetected = (faces) => {
@@ -84,6 +90,7 @@ const CameraScreen = ({ navigation }) => {
             }}
           />
         </View>
+<<<<<<< Updated upstream
         {/* <TouchableOpacity
         onPress={takePic}
         style={{
@@ -108,6 +115,18 @@ const CameraScreen = ({ navigation }) => {
           }}
         >
           <Icon name="ios-beer" size={30} onPress={() => confirm()}></Icon>
+=======
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'flex-end',
+            paddingBottom: 10,
+          }}
+        >
+          <Icon name='ios-close' size={50} onPress={() => deny()}></Icon>
+          <Icon name='ios-checkmark' size={50} onPress={() => confirm()}></Icon>
+>>>>>>> Stashed changes
         </View>
       </View>
     );
@@ -126,8 +145,13 @@ const CameraScreen = ({ navigation }) => {
             }}
           />
         </View>
+<<<<<<< Updated upstream
         <Text style={{ fontSize: 18, marginHorizontal: 20, marginBottom: 0 }}>
           Smile:{" "}
+=======
+        {/* <Text style={{ fontSize: 18, marginHorizontal: 20, marginBottom: 0 }}>
+          Smile:{' '}
+>>>>>>> Stashed changes
           {faces.length > 0
             ? (faces[0].smilingProbability * 100).toFixed(2)
             : "      "}
@@ -140,20 +164,49 @@ const CameraScreen = ({ navigation }) => {
             ? (faces[0].rightEyeOpenProbability * 100).toFixed(2)
             : "      "}
           %
-        </Text>
-        <TouchableOpacity
+        </Text> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'flex-end',
+            paddingBottom: 20,
+          }}
+        >
+          <TouchableOpacity
+            onPress={takePic}
+            style={{
+              borderWidth: 1,
+              borderColor: 'rgba(0,0,0,0.2)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 60,
+              height: 60,
+              backgroundColor: faceOnscreen ? 'green' : 'red',
+              borderRadius: 30,
+            }}
+          >
+            {/* <Icon name={'chevron-right'} size={30} color='#01a699' /> */}
+          </TouchableOpacity>
+        </View>
+        {/* <TouchableOpacity
           onPress={takePic}
           style={{
             flex: 0.15,
             alignItems: "center",
             justifyContent: "center",
             margin: 30,
+<<<<<<< Updated upstream
             width: "80%",
             backgroundColor: faceOnscreen ? "green" : "red",
+=======
+            width: '80%',
+            
+>>>>>>> Stashed changes
           }}
         >
           <Text style={{ fontSize: 25 }}>Snap</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }
