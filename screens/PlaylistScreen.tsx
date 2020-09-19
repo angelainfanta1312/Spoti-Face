@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { Asset } from "expo-asset";
+import * as Linking from 'expo-linking';
 const iconround = Asset.fromModule(require("../assets/images/icon.png"));
 const spottext = Asset.fromModule(
   require("../assets/images/spotifacetext.png")
@@ -50,7 +51,7 @@ const PlaylistScreen = ({
             <TouchableHighlight
               style={styles.submit}
               underlayColor="#1DB954"
-              onPress={() => navigation.navigate("Camera", { name: "Jane" })}
+              onPress={() => Linking.openURL('spotify:playlist:25pw2FVAbqv1Bi1t4FTzmL')}
             >
               <Text style={styles.submitText}>open playlist in Spotify</Text>
             </TouchableHighlight>
