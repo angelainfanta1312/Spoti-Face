@@ -7,6 +7,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
+import {
+  makeRedirectUri,
+  useAuthRequest,
+  ResponseType,
+} from "expo-auth-session";
+const iconround = Asset.fromModule(require("../assets/images/icon.png"));
+const spottext = Asset.fromModule(
+  require("../assets/images/spotifacetext.png")
+);
 
 const onboard1 = Asset.fromModule(
   require("../assets/images/onboardscreen1.png")
@@ -28,6 +37,7 @@ import {
   Alert,
   Image,
   TouchableOpacity,
+  TouchableHighlight,
 } from "react-native";
 import { Constants } from "expo-camera";
 
@@ -43,6 +53,31 @@ import { Constants } from "expo-camera";
 
 const LandingScreen = ({ navigation }: any) => {
   const [state, setState] = React.useState(0);
+
+  const discovery = {
+    authorizationEndpoint: "https://accounts.spotify.com/authorize",
+    tokenEndpoint: "https://accounts.spotify.com/api/token",
+  };
+
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      responseType: ResponseType.Token,
+      clientId: "2d76215e913f4fcf92c226d665f58c1b",
+      scopes: ["playlist-modify-private", "playlist-modify-public"],
+      // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
+      // this must be set to false
+      usePKCE: false,
+      // For usage in managed apps using the proxy
+      redirectUri: makeRedirectUri(),
+    },
+    discovery
+  );
+  React.useEffect(() => {
+    if (response?.type === "success") {
+      const { token } = response.params;
+      console.log(response.authentication?.accessToken);
+    }
+  }, [response]);
 
   if (state === 0) {
     return (
@@ -97,11 +132,11 @@ const LandingScreen = ({ navigation }: any) => {
         </View>
       </View>
     );
-  } else {
+  } else if (state === 2) {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+          <TouchableOpacity onPress={() => setState(3)}>
             <Text style={styles.titleTextFirst}>Step 3: </Text>
             <Text style={styles.titleTextSecond}>create your playlist</Text>
 
@@ -121,6 +156,50 @@ const LandingScreen = ({ navigation }: any) => {
               <Icon name="circle-thin" size={32} color="green" />
               <Icon name="circle-thin" size={32} color="white" />
             </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
+            <Image
+              source={{ uri: iconround.uri }}
+              style={{
+                width: 100,
+                height: 100,
+                alignItems: "center",
+                paddingBottom: 25,
+                display: "flex",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
+
+            <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+              <Image
+                source={{ uri: spottext.uri }}
+                style={{
+                  width: 225,
+                  height: 60,
+                  display: "flex",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              />
+            </View>
+
+            <TouchableHighlight
+              style={styles.submit}
+              underlayColor="#1DB954"
+              onPress={() => {
+                promptAsync();
+              }}
+            >
+              <Text style={styles.submitText}>login to spotify</Text>
+            </TouchableHighlight>
           </TouchableOpacity>
         </View>
       </View>
@@ -210,6 +289,25 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     paddingLeft: 15,
+  },
+  submit: {
+    marginRight: 40,
+    marginLeft: 40,
+    marginTop: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: "#1DB970",
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: "#fff",
+  },
+  submitText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 24,
+  },
+  buttonsStyle: {
+    paddingTop: 25,
   },
 });
 
