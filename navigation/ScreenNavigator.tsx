@@ -1,8 +1,9 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import Icon from "react-native-vector-icons/Ionicons";
 import {
   StyleSheet,
   Button,
@@ -10,11 +11,11 @@ import {
   SafeAreaView,
   Text,
   Alert,
-} from 'react-native';
+} from "react-native";
 
-import LandingScreen from '../screens/LandingScreen';
-import CameraScreen from '../screens/CameraScreen';
-import PlaylistScreen from '../screens/PlaylistScreen';
+import LandingScreen from "../screens/LandingScreen";
+import CameraScreen from "../screens/CameraScreen";
+import PlaylistScreen from "../screens/PlaylistScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,16 +24,16 @@ const MyStack = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name='Landing'
-          component={HomeScreen}
-          options={{ title: 'Welcome to Spotiface', headerShown: false }}
+          name="Landing"
+          component={LandingScreen}
+          options={{ title: "Welcome to Spotiface", headerShown: false }}
         />
         <Stack.Screen
-          name='Camera'
+          name="Camera"
           component={CameraScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name='Playlist' component={PlaylistScreen} />
+        <Stack.Screen name="Playlist" component={PlaylistScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -40,10 +41,10 @@ const MyStack = () => {
 
 const HomeScreen = ({ navigation }: any) => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
+    <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
       <Button
         title="Go to Jane's profile"
-        onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
+        onPress={() => navigation.navigate("Camera", { name: "Jane" })}
       />
     </View>
   );
