@@ -54,9 +54,16 @@ const PlaylistScreen = (
 
   
   var link = null;
+  createPlaylist(route.params.base64, route.params.face)
+    .then((playlink: any) => {
+      link = playlink;
+      setState(1);
+    })
+    .catch((error: any) => {
+      setState(2);
+    });
   const [state, setState] = React.useState(0);
   const render = () => {
-    console.log(state)
     if (state === 0) {
       return renderLoading();
     } else if (state === 1) {
@@ -65,15 +72,6 @@ const PlaylistScreen = (
       return renderError();
     }
   };
-    createPlaylist(route.params.base64, route.params.face)
-    .then((link: any) => {
-      link = link;
-      setState(1);
-    })
-    .catch((error: any) => {
-      console.log('suckmyballs');
-      setState(2);
-    });
   const renderLoading = () => {
     return (
       <View style={styles.container}>
