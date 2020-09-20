@@ -30,9 +30,9 @@ export default function createPlaylist(image_data: string, sp: any){
 		let auth = getUserPass()
 		let auth_token = auth[0]
 		let user_name = auth[1]
-        let playlist_name = "Your Spotiface Playlist"
-        let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
-        let size = 20 //not really though
+		let playlist_name = "bufftest1"
+		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
+		let size = 20 //not really though
         
 
 		let playlist_id = null;

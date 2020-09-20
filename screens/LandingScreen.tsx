@@ -196,7 +196,7 @@ const LandingScreen = ({ navigation }: any) => {
               underlayColor="#1DB954"
               onPress={async () => {
                 await promptAsync();
-                navigation.navigate("Camera")
+                navigation.navigate('Camera');
               }}
             >
               <Text style={styles.submitText}>login to spotify</Text>
