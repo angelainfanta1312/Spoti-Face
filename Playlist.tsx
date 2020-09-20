@@ -6,7 +6,7 @@ export default function createPlaylist(image_data: string, sp: any){
 
         //figure out TARGETPARAMS
         // []
-
+        sp = .99
                 
 
         // []
@@ -52,12 +52,13 @@ export default function createPlaylist(image_data: string, sp: any){
 				let data = res.data["items"];
 				for(var i = 0; i < data.length; i++){
 						topTracks.push(data[i]["uri"])
-						console.log(data[i]["uri"])
+						//console.log(data[i]["uri"])
 		}
 		})
 		.catch((error) => {
-				console.error(error)
-				reject("Couldn't get the top tracks")
+				//console.error(error)
+                reject("Couldn't get the top tracks")
+                return
 		})
 
 		// #To get emotionally appropriate songs from top tracks
@@ -73,42 +74,50 @@ export default function createPlaylist(image_data: string, sp: any){
             })
             .then((res) => {
                     let features = res.data
-                    console.log(features["valence"])
+                    //console.log(features["valence"])
                     let valDiff = Math.abs(features["valence"] - params.valence) //use this to sort later
                     if(valDiff < variability){
                             emotionTopTracks.push(topTracks[i])
                     }
-                    // console.log(res.data)
+                    // //console.log(res.data)
             })
             .catch((error) => {
-                    console.error(error)
+                    //console.error(error)
                     reject("Couldn't get the audio features")
+                    return
             })
         }
 
+        if (emotionTopTracks.length < 1)
+            if(topTracks.length < 1){
+                reject("No songs...?")
+                return
+            }
+            emotionTopTracks.push(topTracks[0])
         //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
-		console.log(seed_track)
-		for(var i =1; i<5;i++){
+		//console.log(seed_track)
+		for(var i =0; i<emotionTopTracks.length;i++){
 			let split = emotionTopTracks[i].split(":")
 			let id = split[2]
 			seed_track = seed_track.concat(",", id)
-			console.log(id)
+			//console.log(id)
 		}
 
-		console.log(seed_track)
+		//console.log(seed_track)
 		
 		//Creates the playlist
 		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
             .then((res) => {
-                console.log(res.data)
+                //console.log(res.data)
                 playlist_id = res.data["id"]
-                console.log(playlist_id)
+                //console.log(playlist_id)
             })
             .catch((error) => {
-                console.error(error)
+                //console.error(error)
                 reject("Can't create a new playlist")
+                return
 		})
 
 
@@ -127,48 +136,50 @@ export default function createPlaylist(image_data: string, sp: any){
 		},
 		})
 		.then((res) => {
-			console.log(res.data)
+			//console.log(res.data)
 			tracks = res.data["tracks"]
 			for(let i=0; i<tracks.length; i++){
 				newTracks.push(tracks[i]["uri"])
-				console.log(tracks[i]["uri"])
+				//console.log(tracks[i]["uri"])
 			}
 		})
 		.catch((error) => {
-			console.error(error)
+			//console.error(error)
 		})
 
         //Adds reccomended tracks
 		await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris": newTracks}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
 		.then((res) => {
-			// console.log(res.data)
-			console.log("Added data")
+			// //console.log(res.data)
+			//console.log("Added data")
 		})
 		.catch((error) => {
-			// console.error(error)
-			console.log("couldn't add song")
-			console.log(newTracks)
-			reject("Couldn't add the song to the playlist")
+			// //console.error(error)
+			//console.log("couldn't add song")
+			//console.log(newTracks)
+            reject("Couldn't add the song to the playlist")
+            return
 		})
 
 		// Adds initially found emotionally appropriate top tracks
 		await axios.post('https://api.spotify.com/v1/playlists/' + playlist_id + "/tracks", {"uris":emotionTopTracks}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
 			.then((res) => {
-				console.log(res.data)
-				console.log("Added data")
+				//console.log(res.data)
+				//console.log("Added data")
 			})
 			.catch((error) => {
-				console.error(error)
-				reject("Couldn't add the song to the playlist")
+				//console.error(error)
+                reject("Couldn't add the song to the playlist")
+                return
 		})
     
         //Should set picture
         axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
         .then((res) => {
-            console.log(res.data)
+            //console.log(res.data)
         })
         .catch((error) => {
-            console.error(error)
+            //console.error(error)
         })
     
 
