@@ -133,6 +133,7 @@ const LandingScreen = ({ navigation }: any) => {
                 flexWrap: "wrap",
                 color: "white",
                 paddingHorizontal: 15,
+                fontFamily: "Avenir-Light",
                 paddingTop: 40,
                 textAlign: "center",
               }}
@@ -159,6 +160,7 @@ const LandingScreen = ({ navigation }: any) => {
                 flexWrap: "wrap",
                 color: "white",
                 paddingHorizontal: 15,
+                fontFamily: "Avenir-Light",
                 textAlign: "center",
               }}
             >
@@ -170,6 +172,7 @@ const LandingScreen = ({ navigation }: any) => {
                 fontWeight: "400",
                 flexWrap: "wrap",
                 color: "white",
+                fontFamily: "Avenir-Light",
                 paddingHorizontal: 15,
                 textAlign: "center",
               }}
