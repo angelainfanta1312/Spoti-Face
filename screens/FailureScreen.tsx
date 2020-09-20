@@ -19,7 +19,7 @@ import createPlaylist from '../Playlist';
 const FailureScreen = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center' }}>
-      <Text>You fucking suck balls.</Text>
+      <Text>You encountered an error while loading.</Text>
     </View>
   );
 };

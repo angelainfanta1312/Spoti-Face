@@ -90,21 +90,21 @@ export default function createPlaylist(
     let numSongsNew = Math.floor(newness * size);
     let numSongsOld = size - numSongsNew;
 
-    //BEGIN!
+    //Authorize
+
     await axios
-        .get("https://api.spotify.com/v1/me", {
-            headers: {
-            Authorization: "Bearer " + auth_token,
-            },
-        })
-        .then((res) => {
-            user_name = res.data.id
-            console.log(user_name)
-        })
-        .catch((error) => {
-            reject("Couldn't get the username: \n" + error);
-            return;
-        });
+      .get('https://api.spotify.com/v1/me', {
+        headers: {
+          Authorization: 'Bearer ' + auth_token,
+        }
+      })
+      .then((res) => {
+        user_name = res.data['id'];
+      })
+      .catch((error) => {
+        reject("Couldn't get the username: \n" + error);
+        return;
+      });
 
     let unfilteredToptracks = [];
     for (let i = 0; i < 2; i++) {
