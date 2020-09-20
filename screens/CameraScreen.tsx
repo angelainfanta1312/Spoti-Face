@@ -66,14 +66,13 @@ const CameraScreen = ({ navigation, route }) => {
       console.error("Photo not taken or set!");
       return;
     }
-    
+    navigation.navigate("Loading");
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     })
       .then(async ({ faces, image }) => {
-        console.log("Faces detected: " + faces);
         photo = await ImageManipulator.manipulateAsync(
           photo.uri,
           [{ resize: { width: 150 } }],
@@ -83,7 +82,6 @@ const CameraScreen = ({ navigation, route }) => {
             base64: true,
           }
         );
-        navigation.navigate("Loading");
         createPlaylist(photo.base64, faces[0], route.params.token)
           .then((playlink: any) => {
             navigation.navigate("Playlist", { link: playlink });

@@ -120,7 +120,8 @@ export default function createPlaylist(
         .then((res) => {
           let data = res.data["items"];
           for (var i = 0; i < data.length; i++) {
-            unfilteredToptracks.push(data[i]["uri"]);
+            if (data[i]["uri"].split(":")[1] != ("local"))
+                unfilteredToptracks.push(data[i]["uri"]);
           }
         })
         .catch((error) => {
@@ -145,7 +146,8 @@ export default function createPlaylist(
           let data = res.data["items"];
         //   console.log(data)
           for (var j = 0; j < data.length; j++) {
-            unfilteredLibtracks.push(data[j]["track"]["uri"]);
+            if (data[j]["track"]["uri"].split(":")[1] != ("local") && !(unfilteredToptracks.includes(data[j]["track"]["uri"])))
+                unfilteredLibtracks.push(data[j]["track"]["uri"]);
           }
         })
         .catch((error) => {
@@ -156,26 +158,35 @@ export default function createPlaylist(
 
     let unfilteredold = unfilteredLibtracks.concat(unfilteredToptracks);
     //prepend with match val, sort
-    for (var i = 0; i < unfilteredold.length; i++) {
-      let split = unfilteredold[i].split(":");
-      let track_id = split[2];
+    let arrays = []
+    for (var n = 0; n < unfilteredold.length / 100; n++) {
+      let thisIter = unfilteredold.slice(n * 100, (n + 1) * 100)
       await axios
-        .get("https://api.spotify.com/v1/audio-features/" + track_id, {
+        .get("https://api.spotify.com/v1/audio-features/", {
           headers: {
             Authorization: "Bearer " + auth_token,
           },
+          params : {
+            ids : thisIter.map(x => x.split(":")[2]).join(',')
+          }
         })
         .then((res) => {
-          unfilteredold[i] = [match(res.data), unfilteredold[i]];
+          for(let i = 0; i < thisIter.length; i++){
+            let features = (res.data.audio_features)[i]
+            thisIter[i] = [match(features), thisIter[i]];
+          }
+          arrays.push(thisIter)
         })
         .catch((error) => {
           reject("Could not get song features: \n" + error);
         });
     }
+    unfilteredold = arrays.flat()
 
     let cmp = (a, b) => b[0] - a[0]; //CHECK INTO THIS IF MESSED UP
     unfilteredold.sort(cmp);
-    let filteredold = unfilteredold.slice(0, numSongsOld).map((v) => v[1]);
+    let filteredold = unfilteredold.slice(0, numSongsOld).map((v) => v[1])
+
 
     let seedTracks = "";
 
@@ -186,7 +197,6 @@ export default function createPlaylist(
         return;
       }
     } else {
-      //console.log(seed_track)
       for (var i = 0; i < 5; i++) {
         if (i >= filteredold.length) break;
         let split = filteredold[i].split(":");
