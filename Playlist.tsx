@@ -1,7 +1,7 @@
-const axios = require('axios');
+const axios = require("axios");
 
 // export default function createPlaylist(base64:string, face:any){
-export default function createPlaylist(image_data: string, sp: any, token){
+export default function createPlaylist(image_data: string, face: any, token){
     return new Promise(async (resolve, reject) => {
 
         //figure out TARGETPARAMS

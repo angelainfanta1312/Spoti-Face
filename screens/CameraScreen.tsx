@@ -66,8 +66,9 @@ const CameraScreen = ({ navigation, route }) => {
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     })
       .then(({ faces, image }) => {
+        console.log("Faces detected: " + faces)
         navigation.navigate('Loading');
-        createPlaylist(photo.base64, 0.99, route.params.token)
+        createPlaylist(photo.base64, faces[0], route.params.token)
           .then((playlink: any) => {
             navigation.navigate('Playlist', {link : playlink});
           })
