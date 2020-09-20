@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // export default function createPlaylist(base64:string, face:any){
-export default function createPlaylist(image_data: string, sp: any){
+export default function createPlaylist(image_data: string, sp: any, token){
     return new Promise(async (resolve, reject) => {
 
         //figure out TARGETPARAMS
@@ -20,7 +20,7 @@ export default function createPlaylist(image_data: string, sp: any){
 
 		//handle auth...
 		function getUserPass(){
-				let auth_token = "BQDbIqrqQKP205kRpHoWoCeTMpmIfP3EuE-zTH6HovZTH0ezm2Zafh970013doBX4NaxBTNB4bHU5hGQ9XT61YlMZLNzuth2mYm8XU9scr5Vq0dwo4qYuSc7JXAIrUN3_3pD-FvAVOJ_rLGn_dUyySn5QNE0-OpsOm00_GPUKRyekmOnHmY9AdmNTGLRVeuIAz5lJHTTjNRS7PiM94to0xTsx_qmlb6ipOOwIoM3ZUyngarR9Jpmmk3NEtppi7mZwisIRBoyl1rcUo9d"
+				let auth_token = "BQCpvnpMVtbtnXrGUmkU2omVT2q83rGnL0B1Lsambr_FNDYr5faTasYki4lrrEphUJrM_ynas2LGPf0-C3sBLjzzSetIwpnL0_MBkwyOSndaZwws056dwPpoPwZasF23cfUK1BRPvJrm-_ISJcspxruU1bJppwFO9aTbUDOmAgKu_sHV1Y3llVCBFknevid0qbZGfwFwtgmQ25IEp6j757uAJV_yLfGK4k_vXT-kIyM1SIZqxLbMo8ytFx5yhO-EBfYrHrKSFRDV0EMx"
 				let user_name = "noteaholic"
 				return [auth_token, user_name]
 		} 

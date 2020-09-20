@@ -53,6 +53,7 @@ import { Constants } from "expo-camera";
 
 const LandingScreen = ({ navigation }: any) => {
   const [state, setState] = React.useState(0);
+  const [authtoken, setAuthtoken] = React.useState(null);
 
   const discovery = {
     authorizationEndpoint: "https://accounts.spotify.com/authorize",
@@ -75,7 +76,9 @@ const LandingScreen = ({ navigation }: any) => {
   React.useEffect(() => {
     if (response?.type === "success") {
       const { token } = response.params;
-      console.log(response.authentication?.accessToken);
+      //console.log(JSON.stringify(response.params, null, "\n"))
+      //console.log(response.authentication?.accessToken);
+      setAuthtoken(token.access_token)
     }
   }, [response]);
 
@@ -196,7 +199,8 @@ const LandingScreen = ({ navigation }: any) => {
               underlayColor="#1DB954"
               onPress={async () => {
                 await promptAsync();
-                navigation.navigate('Camera');
+                if (authtoken != null)
+                  navigation.navigate('Camera', {token: authtoken});
               }}
             >
               <Text style={styles.submitText}>login to spotify</Text>

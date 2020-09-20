@@ -9,7 +9,7 @@ import createPlaylist from '../Playlist';
 
 var photo: any = null;
 
-const CameraScreen = ({ navigation }) => {
+const CameraScreen = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
@@ -67,12 +67,12 @@ const CameraScreen = ({ navigation }) => {
     })
       .then(({ faces, image }) => {
         navigation.navigate('Loading');
-        createPlaylist(photo.base64, 0.99)
+        createPlaylist(photo.base64, 0.99, route.params.token)
           .then((playlink: any) => {
             navigation.navigate('Playlist');
           })
           .catch((error: any) => {
-            console.log('Playlist was not (finished) creating... :(');
+            console.log('Playlist was not (finished) creating. Error: \n' + error)
             navigation.navigate('Failure');
           });
       })
