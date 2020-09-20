@@ -132,10 +132,11 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 64,
+    fontSize: 60,
     fontWeight: "normal",
     color: "white",
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextSecond: {
     fontSize: 56,
@@ -143,6 +144,7 @@ const styles = StyleSheet.create({
     color: "white",
     paddingLeft: 15,
     paddingTop: 10,
+    fontFamily: "Avenir-Light",
   },
   name: {
     color: "#5e5e5e",
@@ -182,9 +184,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 24,
+    fontFamily: "Avenir-Light",
   },
   buttonsStyle: {
-    paddingTop: 25,
+    paddingTop: 20,
   },
 });
 
