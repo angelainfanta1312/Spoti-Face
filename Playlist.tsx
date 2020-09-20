@@ -20,9 +20,9 @@ export default function createPlaylist(image_data: string, sp: any){
 
 		//handle auth...
 		function getUserPass(){
-				let auth_token = "BQDbIqrqQKP205kRpHoWoCeTMpmIfP3EuE-zTH6HovZTH0ezm2Zafh970013doBX4NaxBTNB4bHU5hGQ9XT61YlMZLNzuth2mYm8XU9scr5Vq0dwo4qYuSc7JXAIrUN3_3pD-FvAVOJ_rLGn_dUyySn5QNE0-OpsOm00_GPUKRyekmOnHmY9AdmNTGLRVeuIAz5lJHTTjNRS7PiM94to0xTsx_qmlb6ipOOwIoM3ZUyngarR9Jpmmk3NEtppi7mZwisIRBoyl1rcUo9d"
-				let user_name = "noteaholic"
-				return [auth_token, user_name]
+            let auth_token = "BQCpvnpMVtbtnXrGUmkU2omVT2q83rGnL0B1Lsambr_FNDYr5faTasYki4lrrEphUJrM_ynas2LGPf0-C3sBLjzzSetIwpnL0_MBkwyOSndaZwws056dwPpoPwZasF23cfUK1BRPvJrm-_ISJcspxruU1bJppwFO9aTbUDOmAgKu_sHV1Y3llVCBFknevid0qbZGfwFwtgmQ25IEp6j757uAJV_yLfGK4k_vXT-kIyM1SIZqxLbMo8ytFx5yhO-EBfYrHrKSFRDV0EMx"
+            let user_name = "noteaholic"
+            return [auth_token, user_name]
 		} 
 		// <-- return baharuser baharpass  (eventually, will have from OAuth2) (Or locally?)
 		// getCredentials() <-- return credentials (eventually, go fetch from backend)
@@ -36,29 +36,44 @@ export default function createPlaylist(image_data: string, sp: any){
         
         let playlist_uri = null;
 		let playlist_id = null;
-		let topTracks = []
+        let topTracks = []
+        
+        await axios.get('https://api.spotify.com/v1/me', {
+            headers: {
+                'Authorization' : 'Bearer ' + auth_token,
+            },
+		})
+		.then((res) => {
+            user_name = res.data["user_id"];
+
+		})
+		.catch((error) => {
+            //console.error(error)
+            reject("Couldn't get the username")
+            return
+		})
 
 
 		// #Gets the uris of the top tracks
 		await axios.get('https://api.spotify.com/v1/me/top/tracks', {
-				headers: {
-						'Authorization' : 'Bearer ' + auth_token,
-				},
-				params: {
-					'limit': 50,
-				}
+            headers: {
+                'Authorization' : 'Bearer ' + auth_token,
+            },
+            params: {
+                'limit': 20,
+            }
 		})
 		.then((res) => {
-				let data = res.data["items"];
-				for(var i = 0; i < data.length; i++){
-						topTracks.push(data[i]["uri"])
-						//console.log(data[i]["uri"])
+            let data = res.data["items"];
+            for(var i = 0; i < data.length; i++){
+                topTracks.push(data[i]["uri"])
+                // console.log(data[i]["uri"])
 		}
 		})
 		.catch((error) => {
-				//console.error(error)
-                reject("Couldn't get the top tracks")
-                return
+            //console.error(error)
+            reject("Couldn't get the top tracks")
+            return
 		})
 
 		// #To get emotionally appropriate songs from top tracks
@@ -79,6 +94,7 @@ export default function createPlaylist(image_data: string, sp: any){
                     // if(valDiff < variability){
                     //         emotionTopTracks.push(topTracks[i])
                     // }
+                    console.log(features["valence"])
                     if(features["valence"] < .5){
                         emotionTopTracks.push(topTracks[i])
                     }
@@ -86,11 +102,11 @@ export default function createPlaylist(image_data: string, sp: any){
             })
             .catch((error) => {
                     //console.error(error)
-                    reject("Couldn't get the audio features")
-                    return
+                    // reject("Couldn't get the audio features")
+                    // return
             })
         }
-
+        // console.log(emotionTopTracks)
         if (emotionTopTracks.length < 1){
             if(topTracks.length < 1){
                 reject("No songs...?")
@@ -100,7 +116,7 @@ export default function createPlaylist(image_data: string, sp: any){
         }
         //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
-		let seed_track = emotionTopTracks[0].split(":")[2]
+		let seed_track = ""
 		//console.log(seed_track)
 		for(var i =0; i<emotionTopTracks.length;i++){
 			let split = emotionTopTracks[i].split(":")
@@ -109,9 +125,9 @@ export default function createPlaylist(image_data: string, sp: any){
 			//console.log(id)
 		}
 
-		//console.log(seed_track)
+		// //console.log(seed_track)
 		
-		//Creates the playlist
+		// //Creates the playlist
 		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
             .then((res) => {
                 console.log(res.data)
@@ -121,8 +137,8 @@ export default function createPlaylist(image_data: string, sp: any){
             })
             .catch((error) => {
                 //console.error(error)
-                reject("Can't create a new playlist")
-                return
+                // reject("Can't create a new playlist")
+                // return
 		})
 
 
@@ -162,8 +178,8 @@ export default function createPlaylist(image_data: string, sp: any){
 			// //console.error(error)
 			//console.log("couldn't add song")
 			//console.log(newTracks)
-            reject("Couldn't add the song to the playlist")
-            return
+            // reject("Couldn't add the song to the playlist")
+            // return
 		})
 
 		// Adds initially found emotionally appropriate top tracks
@@ -174,18 +190,18 @@ export default function createPlaylist(image_data: string, sp: any){
 			})
 			.catch((error) => {
 				//console.error(error)
-                reject("Couldn't add the song to the playlist")
-                return
+                // reject("Couldn't add the song to the playlist")
+                // return
 		})
     
         //Should set picture
-        axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token, "Content-Type":"image/jpeg"}})
-        .then((res) => {
-            console.log(res.data)
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+        // axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token, "Content-Type":"image/jpeg"}})
+        // .then((res) => {
+        //     console.log(res.data)
+        // })
+        // .catch((error) => {
+        //     console.error(error)
+        // })
     
 
         resolve(playlist_uri)

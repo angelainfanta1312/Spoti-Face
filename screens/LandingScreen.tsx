@@ -63,7 +63,7 @@ const LandingScreen = ({ navigation }: any) => {
     {
       responseType: ResponseType.Token,
       clientId: "2d76215e913f4fcf92c226d665f58c1b",
-      scopes: ["playlist-modify-private", "playlist-modify-public"],
+      scopes: ["playlist-modify-private", "playlist-modify-public", "ugc-image-upload"],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
