@@ -31,7 +31,7 @@ const PlaylistScreen = ({ navigation, route }) => {
       const result = await Share.share({
         message:
           "Check out this playlist made based off of my face! " +
-          Linking.makeUrl(route.params.link),
+          route.params.link,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
