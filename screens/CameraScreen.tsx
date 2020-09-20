@@ -5,7 +5,7 @@ import * as FaceDetector from 'expo-face-detector';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { render } from 'react-dom';
-import createPlaylist from '../Playlist'
+import createPlaylist from '../Playlist';
 
 var photo: any = null;
 
@@ -64,19 +64,19 @@ const CameraScreen = ({ navigation }) => {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
-    }).then(({ faces, image }) => {
-      console.log(faces)
-      //navigation.navigate('Loading')
-      createPlaylist(photo.base64, .99)
-      .then((playlink: any) => {
-        navigation.navigate('Playlist', {link : playlink});
-      })
-      .catch((error: any) => {
-        console.log("Playlist was not (finished) creating... :(")
-        //Go to 'there was a failure' screen
-      });
     })
-    .catch((error) => console.log('Failed to detect. error: \n' + error));
+      .then(({ faces, image }) => {
+        navigation.navigate('Loading');
+        createPlaylist(photo.base64, 0.99)
+          .then((playlink: any) => {
+            navigation.navigate('Playlist');
+          })
+          .catch((error: any) => {
+            console.log('Playlist was not (finished) creating... :(');
+            navigation.navigate('Failure');
+          });
+      })
+      .catch((error) => console.log('Failed to detect. error: \n' + error));
   };
 
   let onFaceDetected = (faces) => {

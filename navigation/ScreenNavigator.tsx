@@ -1,14 +1,14 @@
-import { Ionicons } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
+import { Ionicons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
 import {
   makeRedirectUri,
   useAuthRequest,
   ResponseType,
-} from "expo-auth-session";
-import Icon from "react-native-vector-icons/Ionicons";
+} from 'expo-auth-session';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   StyleSheet,
   Button,
@@ -16,11 +16,13 @@ import {
   SafeAreaView,
   Text,
   Alert,
-} from "react-native";
+} from 'react-native';
 
-import LandingScreen from "../screens/LandingScreen";
-import CameraScreen from "../screens/CameraScreen";
-import PlaylistScreen from "../screens/PlaylistScreen";
+import LandingScreen from '../screens/LandingScreen';
+import CameraScreen from '../screens/CameraScreen';
+import PlaylistScreen from '../screens/PlaylistScreen';
+import LoadingScreen from '../screens/LoadingScreen';
+import FailureScreen from '../screens/FailureScreen';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +33,7 @@ const MyStack = () => {
         <Stack.Screen
           name="Landing"
           component={LandingScreen}
-          options={{ title: "Welcome to Spotiface", headerShown: false }}
+          options={{ title: 'Welcome to Spotiface', headerShown: false }}
         />
         <Stack.Screen
           name="Camera"
@@ -41,7 +43,17 @@ const MyStack = () => {
         <Stack.Screen
           name="Playlist"
           component={PlaylistScreen}
-          options={{ title: "Playlist Creation", headerShown: false }}
+          options={{ title: 'Playlist Creation', headerShown: false }}
+        />
+        <Stack.Screen
+          name="Loading"
+          component={LoadingScreen}
+          options={{ title: 'Loading', headerShown: false }}
+        />
+        <Stack.Screen
+          name="Failure"
+          component={FailureScreen}
+          options={{ title: 'Failure', headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -50,15 +62,15 @@ const MyStack = () => {
 
 const HomeScreen = ({ navigation }: any) => {
   const discovery = {
-    authorizationEndpoint: "https://accounts.spotify.com/authorize",
-    tokenEndpoint: "https://accounts.spotify.com/api/token",
+    authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+    tokenEndpoint: 'https://accounts.spotify.com/api/token',
   };
 
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: "2d76215e913f4fcf92c226d665f58c1b",
-      scopes: ["playlist-modify-private", "playlist-modify-public"],
+      clientId: '2d76215e913f4fcf92c226d665f58c1b',
+      scopes: ['playlist-modify-private', 'playlist-modify-public'],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
@@ -68,14 +80,14 @@ const HomeScreen = ({ navigation }: any) => {
     discovery
   );
   React.useEffect(() => {
-    if (response?.type === "success") {
+    if (response?.type === 'success') {
       const { token } = response.params;
       console.log(response.authentication?.accessToken);
     }
   }, [response]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
+    <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' }}>
       <Button
         title="Go to Jane's profile"
         onPress={() => {
