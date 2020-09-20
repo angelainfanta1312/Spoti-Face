@@ -30,7 +30,7 @@ export default function createPlaylist(image_data: string, sp: any, token){
 		let auth = getUserPass()
 		let auth_token = auth[0]
 		let user_name = auth[1]
-		let playlist_name = "buffyiscool"
+		let playlist_name = "buffyiscool69"
 		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
 		let size = 20 //not really though
         
