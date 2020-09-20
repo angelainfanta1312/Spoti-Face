@@ -105,7 +105,7 @@ const LandingScreen = ({ navigation }: any) => {
 
             <Image
               source={{ uri: onboard1.uri }}
-              style={{ width: 410, height: 410 }}
+              style={{ width: 425, height: 425 }}
             />
 
             <Text style={styles.titleTextThird}>
