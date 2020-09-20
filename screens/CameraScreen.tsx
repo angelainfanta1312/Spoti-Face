@@ -17,7 +17,10 @@ const CameraScreen = ({ navigation, route }) => {
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      if (this.camera) setPressed(false);
+      if (this.camera) {
+        setPressed(false);
+        this.camera.resumePreview()
+      }
       //this.camera.resumePreview()
     });
 
@@ -45,20 +48,10 @@ const CameraScreen = ({ navigation, route }) => {
         quality: 0.03,
       });
 
-      photo = await ImageManipulator.manipulateAsync(
-        photo.uri,
-        [{ resize: { width: 150 } }],
-        {
-          compress: 0.2,
-          format: ImageManipulator.SaveFormat.PNG,
-          base64: true,
-        }
-      );
-
       this.camera.pausePreview();
       setPressed(true);
     } else {
-      console.log("camera not set.");
+      console.log("camera not set or no face onscreen");
     }
   };
 
@@ -73,14 +66,23 @@ const CameraScreen = ({ navigation, route }) => {
       console.error("Photo not taken or set!");
       return;
     }
-
+    
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     })
-      .then(({ faces, image }) => {
+      .then(async ({ faces, image }) => {
         console.log("Faces detected: " + faces);
+        photo = await ImageManipulator.manipulateAsync(
+          photo.uri,
+          [{ resize: { width: 150 } }],
+          {
+            compress: 0.2,
+            format: ImageManipulator.SaveFormat.PNG,
+            base64: true,
+          }
+        );
         navigation.navigate("Loading");
         createPlaylist(photo.base64, faces[0], route.params.token)
           .then((playlink: any) => {
@@ -197,22 +199,8 @@ const CameraScreen = ({ navigation, route }) => {
               borderRadius: 50,
             }}
           >
-            {/* <Icon name={'chevron-right'} size={30} color='#01a699' /> */}
           </TouchableOpacity>
         </View>
-        {/* <TouchableOpacity
-          onPress={takePic}
-          style={{
-            flex: 0.15,
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: 30,
-            width: '80%',
-            
-          }}
-        >
-          <Text style={{ fontSize: 25 }}>Snap</Text>
-        </TouchableOpacity> */}
       </View>
     );
   };

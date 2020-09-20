@@ -66,10 +66,9 @@ export default function createPlaylist(
       face.rightEyeOpenProbability,
       face.leftEyeOpenProbability
     );
-    // let params = {"valence": .2, "energy": .2}
-    // let newness = .3
-    // let valenceWeight = 0.8;
-    // let energyWeight = 1 - valenceWeight;
+
+    let valenceWeight = 0.8;
+    let energyWeight = 1 - valenceWeight;
     function match(features) {
       let valenceDiff =
         valenceWeight * (1 - Math.abs(features.valence - params.valence));
