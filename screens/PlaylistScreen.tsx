@@ -26,7 +26,6 @@ import createPlaylist from '../Playlist';
 
 const PlaylistScreen = (
 { navigation,
-  route
 }) => {
 	const discovery = {
 		authorizationEndpoint: 'https://accounts.spotify.com/authorize',
@@ -53,15 +52,6 @@ const PlaylistScreen = (
 	}}, [response]);
 
   
-  var link = null;
-  createPlaylist(route.params.base64, route.params.face)
-    .then((playlink: any) => {
-      link = playlink;
-      setState(1);
-    })
-    .catch((error: any) => {
-      setState(2);
-    });
   const [state, setState] = React.useState(0);
   const render = () => {
     if (state === 0) {
@@ -72,6 +62,8 @@ const PlaylistScreen = (
       return renderError();
     }
   };
+
+
   const renderLoading = () => {
     return (
       <View style={styles.container}>
