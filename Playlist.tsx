@@ -10,66 +10,66 @@ export default function createPlaylist(
 ) {
   return new Promise(async (resolve, reject) => {
     // //Helper function for Math
-    // let generateSmile = (sp) => {
-    //   if (sp > 0.5) {
-    //     return sp;
-    //   } else {
-    //     return 0;
-    //   }
-    // };
+    let generateSmile = (sp) => {
+      if (sp > 0.5) {
+        return sp;
+      } else {
+        return 0;
+      }
+    };
 
-    // let Valence = (sp, right, left) => {
-    //   return (4 * (2 ** sp - 1)) / 5 + (right + left) / 10;
-    // };
+    let Valence = (sp, right, left) => {
+      return (4 * (2 ** sp - 1)) / 5 + (right + left) / 10;
+    };
 
-    // let Energy = (sp, roll, right, left) => {
-    //   return (
-    //     (sp * Math.abs(roll) * (90 - Math.abs(roll))) / 8100 +
-    //     generateSmile(sp) / 4 +
-    //     (right + left) / 4
-    //   );
-    // };
+    let Energy = (sp, roll, right, left) => {
+      return (
+        (sp * Math.abs(roll) * (90 - Math.abs(roll))) / 8100 +
+        generateSmile(sp) / 4 +
+        (right + left) / 4
+      );
+    };
 
-    // let Newness = (right, left) => {
-    //   let fr = 0;
-    //   let fl = 0;
+    let Newness = (right, left) => {
+      let fr = 0;
+      let fl = 0;
 
-    //   if (right > 0.35) {
-    //     fr = 0.1;
-    //   } else {
-    //     fr = 0.7;
-    //   }
+      if (right > 0.35) {
+        fr = 0.1;
+      } else {
+        fr = 0.7;
+      }
 
-    //   if (left > 0.35) {
-    //     fl = 0.1;
-    //   } else {
-    //     fl = 0.7;
-    //   }
+      if (left > 0.35) {
+        fl = 0.1;
+      } else {
+        fl = 0.7;
+      }
 
-    //   return 1 - (1 - fr) * (1 - fl);
-    // };
+      return 1 - (1 - fr) * (1 - fl);
+    };
 
-    // let params = {
-    //   valence: Valence(
-    //     face.smilingProbability,
-    //     face.rightEyeOpenProbability,
-    //     face.leftEyeOpenProbability
-    //   ),
-    //   energy: Energy(
-    //     face.smilingProbability,
-    //     face.rollAngle,
-    //     face.rightEyeOpenProbability,
-    //     face.leftEyeOpenProbability
-    //   ),
-    // };
-    // let newness = Newness(
-    //   face.rightEyeOpenProbability,
-    //   face.leftEyeOpenProbability
-    // );
-    let params = {"valence": .2, "energy": .2}
-    let newness = .3
-    let valenceWeight = 0.8;
-    let energyWeight = 1 - valenceWeight;
+    let params = {
+      valence: Valence(
+        face.smilingProbability,
+        face.rightEyeOpenProbability,
+        face.leftEyeOpenProbability
+      ),
+      energy: Energy(
+        face.smilingProbability,
+        face.rollAngle,
+        face.rightEyeOpenProbability,
+        face.leftEyeOpenProbability
+      ),
+    };
+    let newness = Newness(
+      face.rightEyeOpenProbability,
+      face.leftEyeOpenProbability
+    );
+    // let params = {"valence": .2, "energy": .2}
+    // let newness = .3
+    // let valenceWeight = 0.8;
+    // let energyWeight = 1 - valenceWeight;
     function match(features) {
       let valenceDiff =
         valenceWeight * (1 - Math.abs(features.valence - params.valence));

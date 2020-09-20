@@ -1,11 +1,7 @@
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Link, NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
 import { Asset } from 'expo-asset';
 import * as Linking from 'expo-linking';
-const iconround = Asset.fromModule(require("../assets/images/icon.png"));
+const iconround = Asset.fromModule(require('../assets/images/icon.png'));
 const spottext = Asset.fromModule(
   require('../assets/images/spotifacetext.png')
 );
@@ -18,161 +14,71 @@ import {
   Alert,
   TouchableHighlight,
   Image,
-  ActivityIndicator,
 } from 'react-native';
-import createPlaylist from '../Playlist';
 
-const PlaylistScreen = (
-{ navigation,
-  route
-}) => {
-	// function Playlist(){
-	// 	Linking.openURL(playlist_id)
-	// }
-  
-  const [state, setState] = React.useState(0);
-  const render = () => {
-    if (state === 0) {
-      return renderLoading();
-    } else if (state === 1) {
-      return renderLoaded();
-    } else {
-      return renderError();
-    }
-  };
+const PlaylistScreen = ({ navigation, route }) => {
+  // function Playlist(){
+  // 	Linking.openURL(playlist_id)
+  // }
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Image
+          source={{ uri: iconround.uri }}
+          style={{
+            width: 100,
+            height: 100,
+            alignItems: 'center',
+            paddingBottom: 25,
+            display: 'flex',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
+        />
 
-
-  const renderLoading = () => {
-    return (
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <ActivityIndicator size="small" />
+        <View style={{ paddingTop: 25, paddingBottom: 25 }}>
           <Image
-            source={{ uri: iconround.uri }}
+            source={{ uri: spottext.uri }}
             style={{
-              width: 100,
-              height: 100,
-              alignItems: 'center',
-              paddingBottom: 25,
+              width: 225,
+              height: 60,
               display: 'flex',
               marginLeft: 'auto',
               marginRight: 'auto',
             }}
           />
+        </View>
 
-          <View style={{ paddingTop: 25, paddingBottom: 25 }}>
-            <Image
-              source={{ uri: spottext.uri }}
-              style={{
-                width: 225,
-                height: 60,
-                display: 'flex',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-              }}
-            />
+        <Text style={styles.titleTextFirst}>your playlist</Text>
+
+        <Text style={styles.titleTextFirst}>has been</Text>
+
+        <Text style={styles.titleTextFirst}>created!</Text>
+
+        <View style={styles.buttonsStyle}>
+          <View style={styles.buttonsStyle}>
+            <TouchableHighlight
+              style={styles.submit}
+              underlayColor="#1DB954"
+              onPress={() => Linking.openURL(route.params.link)}
+            >
+              <Text style={styles.submitText}>open playlist in Spotify</Text>
+            </TouchableHighlight>
           </View>
 
-          <Text style={styles.titleTextFirst}>your playlist</Text>
-
-          <Text style={styles.titleTextFirst}>has been</Text>
-
-          <Text style={styles.titleTextFirst}>created!</Text>
-
           <View style={styles.buttonsStyle}>
-            <View style={styles.buttonsStyle}>
-              <TouchableHighlight
-                style={styles.submit}
-                underlayColor="#1DB954"
-                onPress={() =>{Linking.openURL(route.params.link)}}
-              >
-                <Text style={styles.submitText}>open playlist in Spotify</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={styles.buttonsStyle}>
-              <TouchableHighlight
-                style={styles.submit}
-                underlayColor="#1DB954"
-                onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
-              >
-                <Text style={styles.submitText}>make another playlist</Text>
-              </TouchableHighlight>
-            </View>
+            <TouchableHighlight
+              style={styles.submit}
+              underlayColor="#1DB954"
+              onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
+            >
+              <Text style={styles.submitText}>make another playlist</Text>
+            </TouchableHighlight>
           </View>
         </View>
       </View>
-    );
-  };
-  const renderError = () => {
-    return <Text>Penis</Text>;
-  };
-  const renderLoaded = () => {
-    return (
-      <View style={styles.container}>
-        <View style={styles.headerContainer}>
-          <Image
-            source={{ uri: iconround.uri }}
-            style={{
-              width: 100,
-              height: 100,
-              alignItems: 'center',
-              paddingBottom: 25,
-              display: 'flex',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-          />
-
-          <View style={{ paddingTop: 25, paddingBottom: 25 }}>
-            <Image
-              source={{ uri: spottext.uri }}
-              style={{
-                width: 225,
-                height: 60,
-                display: 'flex',
-                marginLeft: 'auto',
-                marginRight: 'auto',
-              }}
-            />
-          </View>
-
-          <Text style={styles.titleTextFirst}>your playlist</Text>
-
-          <Text style={styles.titleTextFirst}>has been</Text>
-
-          <Text style={styles.titleTextFirst}>created!</Text>
-
-          <View style={styles.buttonsStyle}>
-            <View style={styles.buttonsStyle}>
-              <TouchableHighlight
-                style={styles.submit}
-                underlayColor="#1DB954"
-                onPress={() =>
-                  Linking.openURL(route.params.link)
-                }
-              >
-                <Text style={styles.submitText}>open playlist in Spotify</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={styles.buttonsStyle}>
-              <TouchableHighlight
-                style={styles.submit}
-                underlayColor="#1DB954"
-                onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
-              >
-                <Text style={styles.submitText}>make another playlist</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
-  //Overall return is just this statement
-  return render();
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
