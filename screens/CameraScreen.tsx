@@ -40,6 +40,7 @@ const CameraScreen = ({ navigation, route }) => {
 
   let takePic = async () => {
     if (this.camera && faceOnscreen) {
+<<<<<<< HEAD
       photo = await this.camera.takePictureAsync({
         base64: true,
         //quality: 0.01,
@@ -55,6 +56,9 @@ const CameraScreen = ({ navigation, route }) => {
         }
       );
 
+=======
+      photo = await this.camera.takePictureAsync({base64 : true, quality: .03});
+>>>>>>> 96fed436300a51b8d22c813472135032fc6e2be3
       this.camera.pausePreview();
       setPressed(true);
     } else {
