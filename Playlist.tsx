@@ -4,15 +4,30 @@ const axios = require("axios");
 export default function createPlaylist(image_data: string, face: any, token){
     return new Promise(async (resolve, reject) => {
 
+
+        //eyes closed: new music -->newness close : .8 ()  open : .1-.2
+        //f (sp, lep, rep, roll) -> target(valence, energy, tempo)
         //figure out TARGETPARAMS
         // []
-        sp = .75
-                
+            //roll angle x smileprob 
+            /*if (lep ~= rep) & lep > .3{ dont do fancy stuff }
+                else test
+            */
 
         // []
-        // (outputs {target_energy, target_danceability...})
+        // (outputs {valence, energy(eyes open)})
+        //most important: ^smile => ^valence  10
+        // [85, 100] => [.4 , .9] 3
+        //  roll x sp [curious, sad]
+
+
+        //Playlist name
+        //sizing
+        ///newness
+        //Playlist [newness new songs, (1-newness) songs from library/top tracks]
 
         //for now, 
+        sp = .75
         let params = {valence: sp}
         console.log("Smile Prob: " + sp)
         let variability = .15;
