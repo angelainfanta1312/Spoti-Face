@@ -24,7 +24,10 @@ import PlaylistScreen from '../screens/PlaylistScreen';
 import LoadingScreen from '../screens/LoadingScreen';
 import FailureScreen from '../screens/FailureScreen';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator({
+  defaultNavigationOptions: {
+    gesturesEnabled: false,
+  });
 
 const MyStack = () => {
   return (
@@ -33,27 +36,27 @@ const MyStack = () => {
         <Stack.Screen
           name="Landing"
           component={LandingScreen}
-          options={{ title: 'Welcome to Spotiface', headerShown: false }}
+          options={{ title: 'Welcome to Spotiface', headerShown: false, gestureEnabled: false, }}
         />
         <Stack.Screen
           name="Camera"
           component={CameraScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, gestureEnabled: false, }}
         />
         <Stack.Screen
           name="Playlist"
           component={PlaylistScreen}
-          options={{ title: 'Playlist Creation', headerShown: false }}
+          options={{ title: 'Playlist Creation', headerShown: false, gestureEnabled: false, }}
         />
         <Stack.Screen
           name="Loading"
           component={LoadingScreen}
-          options={{ title: 'Loading', headerShown: false }}
+          options={{ title: 'Loading', headerShown: false, gestureEnabled: false, }}
         />
         <Stack.Screen
           name="Failure"
           component={FailureScreen}
-          options={{ title: 'Failure', headerShown: false }}
+          options={{ title: 'Failure', headerShown: false, gestureEnabled: false, }}
         />
       </Stack.Navigator>
     </NavigationContainer>
