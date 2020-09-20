@@ -89,6 +89,22 @@ export default function createPlaylist(
     let numSongsNew = Math.floor(newness * size);
     let numSongsOld = size - numSongsNew;
 
+    //Authorize
+
+    await axios
+      .get('https://api.spotify.com/v1/me', {
+        headers: {
+          Authorization: 'Bearer ' + auth_token,
+        }
+      })
+      .then((res) => {
+        user_name = res.data['id'];
+      })
+      .catch((error) => {
+        reject("Couldn't get the username: \n" + error);
+        return;
+      });
+
     //BEGIN!
 
     let unfilteredToptracks = [];
