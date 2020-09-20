@@ -40,7 +40,6 @@ const CameraScreen = ({ navigation, route }) => {
 
   let takePic = async () => {
     if (this.camera && faceOnscreen) {
-<<<<<<< HEAD
       photo = await this.camera.takePictureAsync({
         base64: true,
         //quality: 0.01,
@@ -56,9 +55,6 @@ const CameraScreen = ({ navigation, route }) => {
         }
       );
 
-=======
-      photo = await this.camera.takePictureAsync({base64 : true, quality: .03});
->>>>>>> 96fed436300a51b8d22c813472135032fc6e2be3
       this.camera.pausePreview();
       setPressed(true);
     } else {
@@ -196,13 +192,8 @@ const CameraScreen = ({ navigation, route }) => {
               justifyContent: "center",
               width: 70,
               height: 70,
-<<<<<<< HEAD
               margin: 30,
               backgroundColor: faceOnscreen ? 'green' : 'red',
-=======
-              margin: 10,
-              backgroundColor: faceOnscreen ? "green" : "red",
->>>>>>> 4441d74309e77266e0045a42d02293b155a42baa
               borderRadius: 50,
             }}
           >
