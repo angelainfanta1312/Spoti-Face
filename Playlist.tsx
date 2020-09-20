@@ -144,8 +144,9 @@ export default function createPlaylist(
         })
         .then((res) => {
           let data = res.data["items"];
-          for (var i = 0; i < data.length; i++) {
-            unfilteredLibtracks.push(data[i]["uri"]);
+        //   console.log(data)
+          for (var j = 0; j < data.length; j++) {
+            unfilteredLibtracks.push(data[j]["track"]["uri"]);
           }
         })
         .catch((error) => {
@@ -252,22 +253,6 @@ export default function createPlaylist(
       )
       .catch((error) => {
         reject("Couldn't add a song to the playlist: \n" + error);
-        return;
-      });
-
-    //Creates the playlist
-    await axios
-      .post(
-        "https://api.spotify.com/v1/users/" + user_name + "/playlists",
-        { name: playlist_name, public: false },
-        { headers: { Authorization: "Bearer " + auth_token } }
-      )
-      .then((res) => {
-        playlist_id = res.data["id"];
-        playlist_uri = res.data["uri"];
-      })
-      .catch((error) => {
-        reject("Couldn't create a new playlist: \n" + error);
         return;
       });
 
