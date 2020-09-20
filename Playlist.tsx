@@ -30,7 +30,7 @@ export default function createPlaylist(image_data: string, sp: any){
 		let auth = getUserPass()
 		let auth_token = auth[0]
 		let user_name = auth[1]
-		let playlist_name = "buffyapp"
+		let playlist_name = "buffyiscool"
 		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
 		let size = 20 //not really though
         
@@ -88,17 +88,20 @@ export default function createPlaylist(image_data: string, sp: any){
             })
         }
 
-        if (emotionTopTracks.length < 1)
+        if (emotionTopTracks.length < 1){
             if(topTracks.length < 1){
                 reject("No songs...?")
                 return
             }
             emotionTopTracks.push(topTracks[0])
+        }
         //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
 		//console.log(seed_track)
-		for(var i =0; i<emotionTopTracks.length;i++){
+		for(var i =1; i<5;i++){
+            if(i >= emotionTopTracks.length)
+                break
 			let split = emotionTopTracks[i].split(":")
 			let id = split[2]
 			seed_track = seed_track.concat(",", id)
@@ -144,7 +147,9 @@ export default function createPlaylist(image_data: string, sp: any){
 			}
 		})
 		.catch((error) => {
-			//console.error(error)
+            //console.error(error)
+            reject("Could not get recommended track")
+            return
 		})
 
         //Adds reccomended tracks
@@ -180,6 +185,8 @@ export default function createPlaylist(image_data: string, sp: any){
         })
         .catch((error) => {
             //console.error(error)
+            reject("Could not add picure")
+            return
         })
     
 

@@ -26,6 +26,7 @@ import createPlaylist from '../Playlist';
 
 const PlaylistScreen = (
 { navigation,
+  route
 }) => {
 	const discovery = {
 		authorizationEndpoint: 'https://accounts.spotify.com/authorize',

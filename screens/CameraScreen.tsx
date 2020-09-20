@@ -17,7 +17,8 @@ const CameraScreen = ({ navigation }) => {
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       if(this.camera)
-        this.camera.resumePreview()
+        setPressed(false)
+        //this.camera.resumePreview()
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -58,17 +59,17 @@ const CameraScreen = ({ navigation }) => {
       console.error('Photo not taken or set!');
       return;
     }
-    setPressed(false);
 
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     }).then(({ faces, image }) => {
+      console.log(faces)
       //navigation.navigate('Loading')
       createPlaylist(photo.base64, .99)
       .then((playlink: any) => {
-        navigation.navigate('Playlist');
+        navigation.navigate('Playlist', {link : playlink});
       })
       .catch((error: any) => {
         console.log("Playlist was not (finished) creating... :(")
