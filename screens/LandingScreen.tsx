@@ -275,7 +275,7 @@ const LandingScreen = ({ navigation }: any) => {
                   }}
                 />
               </View>
-
+        <Text style={styles.submitText}>to get started, just</Text>
               <TouchableHighlight
                 style={styles.submit}
                 underlayColor="#1DB954"
@@ -283,6 +283,7 @@ const LandingScreen = ({ navigation }: any) => {
                   promptAsync();
                 }}
               >
+                
                 <Text style={styles.submitText}>login to spotify</Text>
               </TouchableHighlight>
             </TouchableOpacity>
