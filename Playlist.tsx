@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 // export default function createPlaylist(base64:string, face:any){
-export default function createPlaylist(image_data: string, sp: any){
+export default function createPlaylist(image_data: string, sp: any, token){
     return new Promise(async (resolve, reject) => {
 
         //figure out TARGETPARAMS
@@ -20,7 +20,7 @@ export default function createPlaylist(image_data: string, sp: any){
 
 		//handle auth...
 		function getUserPass(){
-            let auth_token = "BQCpvnpMVtbtnXrGUmkU2omVT2q83rGnL0B1Lsambr_FNDYr5faTasYki4lrrEphUJrM_ynas2LGPf0-C3sBLjzzSetIwpnL0_MBkwyOSndaZwws056dwPpoPwZasF23cfUK1BRPvJrm-_ISJcspxruU1bJppwFO9aTbUDOmAgKu_sHV1Y3llVCBFknevid0qbZGfwFwtgmQ25IEp6j757uAJV_yLfGK4k_vXT-kIyM1SIZqxLbMo8ytFx5yhO-EBfYrHrKSFRDV0EMx"
+            let auth_token = "BQDISAsH_cQ-TDBpKTyCKvPkT-8HpgUGJqb4PyQMuDHxsWpBbDBAy7eK2h3mTLDl0qp5_8TejRgKd7mjyHwkggH4uTZfnquCbJeHIsHyjw1kZAyt6f_XjX66-aNuDB0u7Nb7BS77W35MMdWKXHS_y2owdjz89DMmkXlsAWS0WzgEGTqUgXy-Q0h9H53KnXiscbv5xZ2remLwofUHJrb0N3kMMSPHlg9t4j19qXUn5tjri6jvHMyjsH2De5X-IvfAK5VBT3N0QWrSWkUG"
             let user_name = "noteaholic"
             return [auth_token, user_name]
 		} 
@@ -30,7 +30,7 @@ export default function createPlaylist(image_data: string, sp: any){
 		let auth = getUserPass()
 		let auth_token = auth[0]
 		let user_name = auth[1]
-		let playlist_name = "ben_computer"
+		let playlist_name = "ben_computer!!"
 		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
 		let size = 20 //not really though
         
@@ -44,8 +44,9 @@ export default function createPlaylist(image_data: string, sp: any){
             },
 		})
 		.then((res) => {
-            user_name = res.data["user_id"];
-
+            // console.log(res.data)
+            user_name = res.data["id"];
+            console.log(user_name)
 		})
 		.catch((error) => {
             //console.error(error)
@@ -106,7 +107,6 @@ export default function createPlaylist(image_data: string, sp: any){
                     // return
             })
         }
-        // console.log(emotionTopTracks)
         if (emotionTopTracks.length < 1){
             if(topTracks.length < 1){
                 reject("No songs...?")
@@ -114,11 +114,13 @@ export default function createPlaylist(image_data: string, sp: any){
             }
             emotionTopTracks.push(topTracks[0])
         }
-        //Eventually this will want to sort on how close to target
-		//Gets the 5 tracks we are seeding with
+        // //Eventually this will want to sort on how close to target
+		// //Gets the 5 tracks we are seeding with
 		let seed_track = ""
 		//console.log(seed_track)
-		for(var i =0; i<emotionTopTracks.length;i++){
+		for(var i =1; i<5;i++){
+            if(i >= emotionTopTracks.length)
+                break
 			let split = emotionTopTracks[i].split(":")
 			let id = split[2]
 			seed_track = seed_track.concat(",", id)
@@ -133,16 +135,16 @@ export default function createPlaylist(image_data: string, sp: any){
                 console.log(res.data)
                 playlist_id = res.data["id"]
                 playlist_uri = res.data["uri"]
-                //console.log(playlist_id)
+                console.log(playlist_id)
             })
             .catch((error) => {
-                //console.error(error)
+                console.error(error)
                 // reject("Can't create a new playlist")
                 // return
 		})
 
 
-        //gets reccomended tracks
+        //gets recommended tracks
 		let newTracks = []
 		await axios.get('https://api.spotify.com/v1/recommendations', {
 		headers: {
@@ -165,7 +167,9 @@ export default function createPlaylist(image_data: string, sp: any){
 			}
 		})
 		.catch((error) => {
-			//console.error(error)
+            //console.error(error)
+            reject("Could not get recommended track")
+            return
 		})
 
         //Adds reccomended tracks
@@ -194,7 +198,7 @@ export default function createPlaylist(image_data: string, sp: any){
                 // return
 		})
     
-        //Should set picture
+        // //Should set picture
         // axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token, "Content-Type":"image/jpeg"}})
         // .then((res) => {
         //     console.log(res.data)

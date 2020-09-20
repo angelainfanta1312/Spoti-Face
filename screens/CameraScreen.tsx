@@ -9,14 +9,16 @@ import createPlaylist from '../Playlist';
 
 var photo: any = null;
 
-const CameraScreen = ({ navigation }) => {
+const CameraScreen = ({ navigation, route }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [pressed, setPressed] = useState(false);
   const [faceOnscreen, setFaceOnscreen] = useState(false);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      if (this.camera) this.camera.resumePreview();
+      if(this.camera)
+        setPressed(false)
+        //this.camera.resumePreview()
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -57,7 +59,6 @@ const CameraScreen = ({ navigation }) => {
       console.error('Photo not taken or set!');
       return;
     }
-    setPressed(false);
 
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
@@ -66,12 +67,12 @@ const CameraScreen = ({ navigation }) => {
     })
       .then(({ faces, image }) => {
         navigation.navigate('Loading');
-        createPlaylist(photo.base64, 0.99)
+        createPlaylist(photo.base64, 0.99, route.params.token)
           .then((playlink: any) => {
             navigation.navigate('Playlist');
           })
           .catch((error: any) => {
-            console.log('Playlist was not (finished) creating... :(');
+            console.log('Playlist was not (finished) creating. Error: \n' + error)
             navigation.navigate('Failure');
           });
       })

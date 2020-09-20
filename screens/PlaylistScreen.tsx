@@ -24,6 +24,7 @@ import createPlaylist from '../Playlist';
 
 const PlaylistScreen = (
 { navigation,
+  route
 }) => {
 	// function Playlist(){
 	// 	Linking.openURL(playlist_id)
