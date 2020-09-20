@@ -1,9 +1,10 @@
-import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
-import { Asset } from 'expo-asset';
-import * as Linking from 'expo-linking';
-const iconround = Asset.fromModule(require('../assets/images/icon.png'));
+import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import * as Linking from "expo-linking";
+const iconround = Asset.fromModule(require("../assets/images/icon.png"));
 const spottext = Asset.fromModule(
-  require('../assets/images/spotifacetext.png')
+  require("../assets/images/spotifacetext.png")
 );
 import {
   StyleSheet,
@@ -14,12 +15,37 @@ import {
   Alert,
   TouchableHighlight,
   Image,
-} from 'react-native';
+  Share,
+} from "react-native";
 
 const PlaylistScreen = ({ navigation, route }) => {
   // function Playlist(){
   // 	Linking.openURL(playlist_id)
   // }
+  let [fontsLoaded] = Font.useFonts({
+    "Avenir-Light": require("../assets/fonts/Avenir-Light.ttf"),
+  });
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          "Check out this playlist made based off of my face! " +
+          route.params.link,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -28,11 +54,11 @@ const PlaylistScreen = ({ navigation, route }) => {
           style={{
             width: 100,
             height: 100,
-            alignItems: 'center',
+            alignItems: "center",
             paddingBottom: 25,
-            display: 'flex',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            display: "flex",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         />
 
@@ -42,9 +68,9 @@ const PlaylistScreen = ({ navigation, route }) => {
             style={{
               width: 225,
               height: 60,
-              display: 'flex',
-              marginLeft: 'auto',
-              marginRight: 'auto',
+              display: "flex",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           />
         </View>
@@ -70,9 +96,19 @@ const PlaylistScreen = ({ navigation, route }) => {
             <TouchableHighlight
               style={styles.submit}
               underlayColor="#1DB954"
-              onPress={() => navigation.navigate('Camera', { name: 'Jane' })}
+              onPress={() => navigation.navigate("Camera", { name: "Jane" })}
             >
               <Text style={styles.submitText}>make another playlist</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={styles.buttonsStyle}>
+            <TouchableHighlight
+              style={styles.submit}
+              underlayColor="#1DB954"
+              onPress={onShare}
+            >
+              <Text style={styles.submitText}>share with your friends</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -84,9 +120,9 @@ const PlaylistScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1DB954',
+    backgroundColor: "#1DB954",
     //alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     paddingLeft: 15,
     paddingTop: 60,
   },
@@ -96,38 +132,40 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 64,
-    fontWeight: 'normal',
-    color: 'white',
-    textAlign: 'center',
+    fontSize: 60,
+    fontWeight: "normal",
+    color: "white",
+    textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextSecond: {
     fontSize: 56,
-    fontWeight: '400',
-    color: 'white',
+    fontWeight: "400",
+    color: "white",
     paddingLeft: 15,
     paddingTop: 10,
+    fontFamily: "Avenir-Light",
   },
   name: {
-    color: '#5e5e5e',
-    alignSelf: 'flex-start',
+    color: "#5e5e5e",
+    alignSelf: "flex-start",
     marginLeft: 30,
   },
   desc: {
-    color: '#5e5e5e',
-    alignSelf: 'flex-start',
+    color: "#5e5e5e",
+    alignSelf: "flex-start",
     marginTop: 5,
     marginHorizontal: 30,
     fontSize: 14,
   },
   divider: {
-    backgroundColor: '#c0c0c0',
+    backgroundColor: "#c0c0c0",
     width: 10,
     margin: 10,
   },
   icon: {
-    flexDirection: 'row',
-    alignSelf: 'flex-start',
+    flexDirection: "row",
+    alignSelf: "flex-start",
     marginHorizontal: 30,
     fontSize: 14,
   },
@@ -137,18 +175,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: '#1DB970',
+    backgroundColor: "#1DB970",
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
   submitText: {
-    color: '#fff',
-    textAlign: 'center',
+    color: "#fff",
+    textAlign: "center",
     fontSize: 24,
+    fontFamily: "Avenir-Light",
   },
   buttonsStyle: {
-    paddingTop: 25,
+    paddingTop: 20,
   },
 });
 

@@ -28,6 +28,7 @@ const onboard2 = Asset.fromModule(
 const iconnotround = Asset.fromModule(
   require("../assets/images/iconnotrounded.png")
 );
+
 import {
   StyleSheet,
   Button,
@@ -52,6 +53,10 @@ import { Constants } from "expo-camera";
 // }))();
 
 const LandingScreen = ({ navigation }: any) => {
+  let [fontsLoaded] = Font.useFonts({
+    "Avenir-Light": require("../assets/fonts/Avenir-Light.ttf"),
+  });
+
   const [state, setState] = React.useState(4);
   //const [authtoken, setAuthtoken] = React.useState(null);
 
@@ -172,7 +177,7 @@ const LandingScreen = ({ navigation }: any) => {
             />
 
             <Text style={styles.titleTextThird}>
-              If you see green, you're good to go.
+              if you see green, you're good to go
             </Text>
 
             <View style={styles.footerWrapper}>
@@ -243,43 +248,45 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-            <Image
-              source={{ uri: iconround.uri }}
-              style={{
-                width: 100,
-                height: 100,
-                alignItems: "center",
-                paddingBottom: 25,
-                display: "flex",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            />
-
-            <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+          <View style={styles.centerAll}>
+            <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
               <Image
-                source={{ uri: spottext.uri }}
+                source={{ uri: iconround.uri }}
                 style={{
-                  width: 225,
-                  height: 60,
+                  width: 100,
+                  height: 100,
+                  alignItems: "center",
+                  paddingBottom: 25,
                   display: "flex",
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
               />
-            </View>
-            <Text style={styles.submitText}>to get started, just</Text>
-            <TouchableHighlight
-              style={styles.submit}
-              underlayColor="#1DB954"
-              onPress={() => {
-                promptAsync();
-              }}
-            >
-              <Text style={styles.submitText}>login to spotify</Text>
-            </TouchableHighlight>
-          </TouchableOpacity>
+
+              <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+                <Image
+                  source={{ uri: spottext.uri }}
+                  style={{
+                    width: 225,
+                    height: 60,
+                    display: "flex",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                />
+              </View>
+
+              <TouchableHighlight
+                style={styles.submit}
+                underlayColor="#1DB954"
+                onPress={() => {
+                  promptAsync();
+                }}
+              >
+                <Text style={styles.submitText}>login to spotify</Text>
+              </TouchableHighlight>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -304,6 +311,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "white",
     paddingLeft: 15,
+    fontFamily: "Avenir-Light",
   },
   titleTextSecond: {
     fontSize: 45,
@@ -312,6 +320,7 @@ const styles = StyleSheet.create({
 
     paddingTop: 10,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextSecond2: {
     fontSize: 40,
@@ -320,6 +329,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextThird: {
     fontSize: 24,
@@ -328,6 +338,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 30,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextThirdish1: {
     fontSize: 20,
@@ -336,6 +347,7 @@ const styles = StyleSheet.create({
     paddingTop: 90,
     paddingHorizontal: 15,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextThirdish2: {
     fontSize: 18,
@@ -344,6 +356,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 50,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   subTitleTextThird: {
     fontSize: 24,
@@ -354,6 +367,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 100,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   footerWrapper: {
     flexWrap: "wrap",
@@ -361,13 +375,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexDirection: "row",
     paddingTop: 45,
-    paddingHorizontal: 25,
+    paddingHorizontal: 45,
   },
   titleTextFourth: {
     fontSize: 20,
     fontWeight: "400",
     color: "white",
     paddingLeft: 15,
+    fontFamily: "Avenir-Light",
   },
   submit: {
     marginRight: 40,
@@ -384,9 +399,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 24,
+    fontFamily: "Avenir-Light",
   },
   buttonsStyle: {
     paddingTop: 25,
+  },
+  centerAll: {
+    paddingTop: 100,
+    //marginBottom: "auto",
   },
 });
 
