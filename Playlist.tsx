@@ -66,7 +66,7 @@ export default function createPlaylist(
     //   face.rightEyeOpenProbability,
     //   face.leftEyeOpenProbability
     // );
-    let params = {"valence": .8, "energy": .7}
+    let params = {"valence": .2, "energy": .2}
     let newness = .3
     let valenceWeight = 0.8;
     let energyWeight = 1 - valenceWeight;
