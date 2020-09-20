@@ -66,7 +66,7 @@ export default function createPlaylist(image_data: string, face: any, token){
             }
 		})
 		.then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             let data = res.data["items"];
             for(var i = 0; i < data.length; i++){
                 topTracks.push(data[i]["uri"])
@@ -141,10 +141,10 @@ export default function createPlaylist(image_data: string, face: any, token){
 		// //Creates the playlist
 		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 playlist_id = res.data["id"]
                 playlist_uri = res.data["uri"]
-                console.log(playlist_id)
+                // console.log(playlist_id)
             })
             .catch((error) => {
                 console.error(error)
@@ -168,7 +168,7 @@ export default function createPlaylist(image_data: string, face: any, token){
 		},
 		})
 		.then((res) => {
-			console.log(res.data)
+			// console.log(res.data)
 			tracks = res.data["tracks"]
 			for(let i=0; i<tracks.length; i++){
 				newTracks.push(tracks[i]["uri"])
@@ -176,7 +176,7 @@ export default function createPlaylist(image_data: string, face: any, token){
 			}
 		})
 		.catch((error) => {
-            console.log(seed_track)
+            // console.log(seed_track)
             //console.error(error)
             reject("Could not get recommended track")
             return

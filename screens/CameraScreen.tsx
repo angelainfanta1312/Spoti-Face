@@ -181,8 +181,13 @@ const CameraScreen = ({ navigation, route }) => {
               justifyContent: "center",
               width: 70,
               height: 70,
+<<<<<<< HEAD
+              margin: 30,
+              backgroundColor: faceOnscreen ? 'green' : 'red',
+=======
               margin: 10,
               backgroundColor: faceOnscreen ? "green" : "red",
+>>>>>>> 4441d74309e77266e0045a42d02293b155a42baa
               borderRadius: 50,
             }}
           >
