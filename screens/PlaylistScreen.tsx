@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { Link, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
 import { Asset } from 'expo-asset';
@@ -84,7 +84,7 @@ const PlaylistScreen = (
               <TouchableHighlight
                 style={styles.submit}
                 underlayColor="#1DB954"
-                onPress={() =>{console.log("Temp go to playlist")}}
+                onPress={() =>{Linking.openURL(route.params.link)}}
               >
                 <Text style={styles.submitText}>open playlist in Spotify</Text>
               </TouchableHighlight>
@@ -149,7 +149,7 @@ const PlaylistScreen = (
                 style={styles.submit}
                 underlayColor="#1DB954"
                 onPress={() =>
-                  Linking.openURL('spotify:playlist:25pw2FVAbqv1Bi1t4FTzmL')
+                  Linking.openURL(route.params.link)
                 }
               >
                 <Text style={styles.submitText}>open playlist in Spotify</Text>

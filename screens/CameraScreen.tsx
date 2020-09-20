@@ -40,7 +40,7 @@ const CameraScreen = ({ navigation, route }) => {
 
   let takePic = async () => {
     if (this.camera && faceOnscreen) {
-      photo = await this.camera.takePictureAsync();
+      photo = await this.camera.takePictureAsync({base64 : true, quality: .04});
       this.camera.pausePreview();
       setPressed(true);
     } else {
@@ -69,7 +69,7 @@ const CameraScreen = ({ navigation, route }) => {
         navigation.navigate('Loading');
         createPlaylist(photo.base64, 0.99, route.params.token)
           .then((playlink: any) => {
-            navigation.navigate('Playlist');
+            navigation.navigate('Playlist', {link : playlink});
           })
           .catch((error: any) => {
             console.log('Playlist was not (finished) creating. Error: \n' + error)
