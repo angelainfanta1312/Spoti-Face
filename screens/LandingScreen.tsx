@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
 
     paddingTop: 10,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextSecond2: {
     fontSize: 40,
@@ -258,6 +259,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextThird: {
     fontSize: 24,
@@ -266,6 +268,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 30,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextThirdish1: {
     fontSize: 20,
@@ -274,6 +277,7 @@ const styles = StyleSheet.create({
     paddingTop: 90,
     paddingHorizontal: 15,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   titleTextThirdish2: {
     fontSize: 18,
@@ -282,6 +286,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 50,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   subTitleTextThird: {
     fontSize: 24,
@@ -292,6 +297,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingBottom: 100,
     textAlign: "center",
+    fontFamily: "Avenir-Light",
   },
   footerWrapper: {
     flexWrap: "wrap",
@@ -306,6 +312,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     paddingLeft: 15,
+    fontFamily: "Avenir-Light",
   },
   submit: {
     marginRight: 40,
@@ -322,6 +329,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     fontSize: 24,
+    fontFamily: "Avenir-Light",
   },
   buttonsStyle: {
     paddingTop: 25,
