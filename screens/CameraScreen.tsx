@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { Camera } from 'expo-camera';
-import * as FaceDetector from 'expo-face-detector';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { setStatusBarBackgroundColor } from 'expo-status-bar';
-import { render } from 'react-dom';
-import createPlaylist from '../Playlist';
+import React, { useState, useEffect } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import { Camera } from "expo-camera";
+import * as FaceDetector from "expo-face-detector";
+import Icon from "react-native-vector-icons/Ionicons";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
+import { render } from "react-dom";
+import createPlaylist from "../Playlist";
+import * as ImageManipulator from "expo-image-manipulator";
 
 var photo: any = null;
 
@@ -15,10 +16,9 @@ const CameraScreen = ({ navigation, route }) => {
   const [faceOnscreen, setFaceOnscreen] = useState(false);
 
   React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if(this.camera)
-        setPressed(false)
-        //this.camera.resumePreview()
+    const unsubscribe = navigation.addListener("focus", () => {
+      if (this.camera) setPressed(false);
+      //this.camera.resumePreview()
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -29,7 +29,7 @@ const CameraScreen = ({ navigation, route }) => {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      setHasPermission(status === "granted");
     })();
   }, []);
 
@@ -40,11 +40,25 @@ const CameraScreen = ({ navigation, route }) => {
 
   let takePic = async () => {
     if (this.camera && faceOnscreen) {
-      photo = await this.camera.takePictureAsync({base64 : true, quality: .04});
+      photo = await this.camera.takePictureAsync({
+        base64: true,
+        //quality: 0.01,
+      });
+
+      photo = await ImageManipulator.manipulateAsync(
+        photo.uri,
+        [{ resize: { width: 150 } }],
+        {
+          compress: 0.2,
+          format: ImageManipulator.SaveFormat.PNG,
+          base64: true,
+        }
+      );
+
       this.camera.pausePreview();
       setPressed(true);
     } else {
-      console.log('camera not set.');
+      console.log("camera not set.");
     }
   };
 
@@ -56,7 +70,7 @@ const CameraScreen = ({ navigation, route }) => {
 
   let confirm = async () => {
     if (photo == null) {
-      console.error('Photo not taken or set!');
+      console.error("Photo not taken or set!");
       return;
     }
 
@@ -66,18 +80,20 @@ const CameraScreen = ({ navigation, route }) => {
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     })
       .then(({ faces, image }) => {
-        console.log("Faces detected: " + faces)
-        navigation.navigate('Loading');
+        console.log("Faces detected: " + faces);
+        navigation.navigate("Loading");
         createPlaylist(photo.base64, faces[0], route.params.token)
           .then((playlink: any) => {
-            navigation.navigate('Playlist', {link : playlink});
+            navigation.navigate("Playlist", { link: playlink });
           })
           .catch((error: any) => {
-            console.log('Playlist was not (finished) creating. Error: \n' + error)
-            navigation.navigate('Failure');
+            console.log(
+              "Playlist was not (finished) creating. Error: \n" + error
+            );
+            navigation.navigate("Failure");
           });
       })
-      .catch((error) => console.log('Failed to detect. error: \n' + error));
+      .catch((error) => console.log("Failed to detect. error: \n" + error));
   };
 
   let onFaceDetected = (faces) => {
@@ -98,9 +114,9 @@ const CameraScreen = ({ navigation, route }) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-          backgroundColor: '#000',
+          justifyContent: "center",
+          alignContent: "center",
+          backgroundColor: "#000",
         }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
@@ -114,24 +130,24 @@ const CameraScreen = ({ navigation, route }) => {
         </View>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'flex-end',
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "flex-end",
             paddingBottom: 20,
-            backgroundColor: '#000',
+            backgroundColor: "#000",
           }}
         >
           <Icon
             name="ios-close"
             size={65}
             onPress={() => deny()}
-            style={{ color: 'red' }}
+            style={{ color: "red" }}
           ></Icon>
           <Icon
             name="ios-checkmark"
             size={65}
             onPress={() => confirm()}
-            style={{ color: 'green' }}
+            style={{ color: "green" }}
           ></Icon>
         </View>
       </View>
@@ -142,9 +158,9 @@ const CameraScreen = ({ navigation, route }) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
-          alignContent: 'center',
-          backgroundColor: '#000',
+          justifyContent: "center",
+          alignContent: "center",
+          backgroundColor: "#000",
         }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
@@ -159,25 +175,25 @@ const CameraScreen = ({ navigation, route }) => {
         </View>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            alignItems: 'flex-end',
-            alignContent: 'center',
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "flex-end",
+            alignContent: "center",
             paddingBottom: 20,
-            backgroundColor: '#000',
+            backgroundColor: "#000",
           }}
         >
           <TouchableOpacity
             onPress={takePic}
             style={{
               borderWidth: 1,
-              borderColor: 'rgba(0,0,0,0.2)',
-              alignItems: 'center',
-              justifyContent: 'center',
+              borderColor: "rgba(0,0,0,0.2)",
+              alignItems: "center",
+              justifyContent: "center",
               width: 70,
               height: 70,
               margin: 10,
-              backgroundColor: faceOnscreen ? 'green' : 'red',
+              backgroundColor: faceOnscreen ? "green" : "red",
               borderRadius: 50,
             }}
           >
