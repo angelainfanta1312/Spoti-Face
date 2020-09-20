@@ -42,7 +42,7 @@ const CameraScreen = ({ navigation, route }) => {
     if (this.camera && faceOnscreen) {
       photo = await this.camera.takePictureAsync({
         base64: true,
-        //quality: 0.01,
+        quality: 0.03,
       });
 
       photo = await ImageManipulator.manipulateAsync(
