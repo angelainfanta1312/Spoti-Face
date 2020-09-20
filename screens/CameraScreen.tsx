@@ -58,15 +58,22 @@ const CameraScreen = ({ navigation }) => {
       console.error('Photo not taken or set!');
       return;
     }
+    setPressed(false);
 
     FaceDetector.detectFacesAsync(photo.uri, {
       mode: FaceDetector.Constants.Mode.accurate,
       runClassifications: FaceDetector.Constants.Classifications.all,
       detectLandmarks: FaceDetector.Constants.Landmarks.none,
     }).then(({ faces, image }) => {
-      setPressed(false);
-      //let prom = createPlaylist(photo.base64, faces[0])
-      navigation.navigate('Playlist', {base64: photo.base64, face: faces[0]});
+    //   navigation.navigate('Loading')
+      createPlaylist(photo.base64, .99)
+      .then((playlink: any) => {
+        navigation.navigate('Playlist');
+      })
+      .catch((error: any) => {
+        console.log("Playlist was not (finished) creating... :(")
+        //Go to 'there was a failure' screen
+      });
     })
     .catch((error) => console.log('Failed to detect. error: \n' + error));
   };

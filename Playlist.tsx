@@ -34,7 +34,7 @@ export default function createPlaylist(image_data: string, sp: any){
 		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
 		let size = 20 //not really though
         
-
+        let playlist_uri = null;
 		let playlist_id = null;
 		let topTracks = []
 
@@ -76,8 +76,11 @@ export default function createPlaylist(image_data: string, sp: any){
                     let features = res.data
                     //console.log(features["valence"])
                     let valDiff = Math.abs(features["valence"] - params.valence) //use this to sort later
-                    if(valDiff < variability){
-                            emotionTopTracks.push(topTracks[i])
+                    // if(valDiff < variability){
+                    //         emotionTopTracks.push(topTracks[i])
+                    // }
+                    if(features["valence"] < .5){
+                        emotionTopTracks.push(topTracks[i])
                     }
                     // //console.log(res.data)
             })
@@ -88,12 +91,13 @@ export default function createPlaylist(image_data: string, sp: any){
             })
         }
 
-        if (emotionTopTracks.length < 1)
+        if (emotionTopTracks.length < 1){
             if(topTracks.length < 1){
                 reject("No songs...?")
                 return
             }
             emotionTopTracks.push(topTracks[0])
+        }
         //Eventually this will want to sort on how close to target
 		//Gets the 5 tracks we are seeding with
 		let seed_track = emotionTopTracks[0].split(":")[2]
@@ -110,8 +114,9 @@ export default function createPlaylist(image_data: string, sp: any){
 		//Creates the playlist
 		await axios.post('https://api.spotify.com/v1/users/' + user_name + '/playlists', {"name": playlist_name, "public": false}, {headers: {'Authorization' : 'Bearer ' + auth_token}})
             .then((res) => {
-                //console.log(res.data)
+                console.log(res.data)
                 playlist_id = res.data["id"]
+                playlist_uri = res.data["uri"]
                 //console.log(playlist_id)
             })
             .catch((error) => {
@@ -174,16 +179,16 @@ export default function createPlaylist(image_data: string, sp: any){
 		})
     
         //Should set picture
-        axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token}})
+        axios.put('https://api.spotify.com/v1/playlists/' + playlist_id + "/images", image_data, {headers: {'Authorization' : 'Bearer ' + auth_token, "Content-Type":"image/jpeg"}})
         .then((res) => {
-            //console.log(res.data)
+            console.log(res.data)
         })
         .catch((error) => {
-            //console.error(error)
+            console.error(error)
         })
     
 
-        resolve(playlist_id)
+        resolve(playlist_uri)
 
     })
 }
