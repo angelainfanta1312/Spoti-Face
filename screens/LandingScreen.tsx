@@ -28,6 +28,7 @@ const onboard2 = Asset.fromModule(
 const iconnotround = Asset.fromModule(
   require("../assets/images/iconnotrounded.png")
 );
+
 import {
   StyleSheet,
   Button,
@@ -52,6 +53,10 @@ import { Constants } from "expo-camera";
 // }))();
 
 const LandingScreen = ({ navigation }: any) => {
+  let [fontsLoaded] = Font.useFonts({
+    "Avenir-Light": require("../assets/fonts/Avenir-Light.ttf"),
+  });
+
   const [state, setState] = React.useState(0);
   //const [authtoken, setAuthtoken] = React.useState(null);
 
@@ -236,6 +241,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     color: "white",
     paddingLeft: 15,
+    fontFamily: "Avenir-Light",
   },
   titleTextSecond: {
     fontSize: 45,
