@@ -52,7 +52,7 @@ import { Constants } from "expo-camera";
 // }))();
 
 const LandingScreen = ({ navigation }: any) => {
-  const [state, setState] = React.useState(0);
+  const [state, setState] = React.useState(4);
   //const [authtoken, setAuthtoken] = React.useState(null);
 
   const discovery = {
@@ -64,7 +64,13 @@ const LandingScreen = ({ navigation }: any) => {
     {
       responseType: ResponseType.Token,
       clientId: "2d76215e913f4fcf92c226d665f58c1b",
-      scopes: ["playlist-modify-private", "playlist-modify-public", "ugc-image-upload", "user-top-read", "user-library-read"],
+      scopes: [
+        "playlist-modify-private",
+        "playlist-modify-public",
+        "ugc-image-upload",
+        "user-top-read",
+        "user-library-read",
+      ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
@@ -80,11 +86,79 @@ const LandingScreen = ({ navigation }: any) => {
       //console.log(response.authentication?.accessToken);
       //console.log(" response was success")
       //setAuthtoken(response.params.access_token)
-      navigation.navigate("Camera", {token: response.params.access_token})
+      navigation.navigate("Camera", { token: response.params.access_token });
     }
   }, [response]);
 
-  if (state === 0) {
+  if (state === 4) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Image
+            source={{ uri: iconround.uri }}
+            style={{
+              width: 100,
+              height: 100,
+              alignItems: "center",
+              paddingBottom: 25,
+              marginTop: 70,
+              display: "flex",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          />
+
+          <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+            <Image
+              source={{ uri: spottext.uri }}
+              style={{
+                width: 225,
+                height: 60,
+                display: "flex",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
+          </View>
+          <Text style={{
+            fontSize: 60,
+            fontWeight: "400",
+            flexWrap: 'wrap',
+            color: "white",
+            paddingHorizontal: 15,
+            paddingTop : 40,
+            textAlign: "center",}}>
+                  welcome to a</Text>
+                  <Text style={{
+            fontSize: 60,
+            fontWeight: "400",
+            flexWrap: 'wrap',
+            color: "white",
+            paddingHorizontal: 15,
+            textAlign: "center",}}>
+                  whole new</Text>
+                  <Text style={{
+            fontSize: 60,
+            fontWeight: "400",
+            flexWrap: 'wrap',
+            color: "white",
+            paddingHorizontal: 15,
+            textAlign: "center",}}>
+                  listening </Text>
+                  <Text style={{
+            fontSize: 60,
+            fontWeight: "400",
+            flexWrap: 'wrap',
+            color: "white",
+            paddingHorizontal: 15,
+            textAlign: "center",}}>
+                  experience </Text>
+                  <TouchableOpacity onPress={() => setState(0)}>
+          <Text style={styles.titleTextThirdish1}>tap to get started</Text></TouchableOpacity>
+        </View>
+      </View>
+    );
+  } else if (state === 0) {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -195,12 +269,12 @@ const LandingScreen = ({ navigation }: any) => {
                 }}
               />
             </View>
-
+            <Text style={styles.submitText}>to get started, just</Text>
             <TouchableHighlight
               style={styles.submit}
               underlayColor="#1DB954"
               onPress={() => {
-                promptAsync()
+                promptAsync();
               }}
             >
               <Text style={styles.submitText}>login to spotify</Text>
