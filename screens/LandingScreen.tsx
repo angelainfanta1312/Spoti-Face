@@ -105,7 +105,7 @@ const LandingScreen = ({ navigation }: any) => {
 
             <Image
               source={{ uri: onboard1.uri }}
-              style={{ width: 425, height: 425 }}
+              style={{ width: 400, height: 400 }}
             />
 
             <Text style={styles.titleTextThird}>
@@ -180,43 +180,45 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-            <Image
-              source={{ uri: iconround.uri }}
-              style={{
-                width: 100,
-                height: 100,
-                alignItems: "center",
-                paddingBottom: 25,
-                display: "flex",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            />
-
-            <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+          <View style={styles.centerAll}>
+            <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
               <Image
-                source={{ uri: spottext.uri }}
+                source={{ uri: iconround.uri }}
                 style={{
-                  width: 225,
-                  height: 60,
+                  width: 100,
+                  height: 100,
+                  alignItems: "center",
+                  paddingBottom: 25,
                   display: "flex",
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
               />
-            </View>
 
-            <TouchableHighlight
-              style={styles.submit}
-              underlayColor="#1DB954"
-              onPress={() => {
-                promptAsync();
-              }}
-            >
-              <Text style={styles.submitText}>login to spotify</Text>
-            </TouchableHighlight>
-          </TouchableOpacity>
+              <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+                <Image
+                  source={{ uri: spottext.uri }}
+                  style={{
+                    width: 225,
+                    height: 60,
+                    display: "flex",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                />
+              </View>
+
+              <TouchableHighlight
+                style={styles.submit}
+                underlayColor="#1DB954"
+                onPress={() => {
+                  promptAsync();
+                }}
+              >
+                <Text style={styles.submitText}>login to spotify</Text>
+              </TouchableHighlight>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -333,6 +335,10 @@ const styles = StyleSheet.create({
   },
   buttonsStyle: {
     paddingTop: 25,
+  },
+  centerAll: {
+    paddingTop: 100,
+    //marginBottom: "auto",
   },
 });
 
