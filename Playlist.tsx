@@ -82,7 +82,7 @@ export default function createPlaylist(
     let playlist_uri = null;
     let playlist_id = null;
     let user_name = null;
-
+    let share_url = null;
     let playlist_name = "Spotiface"; //TODo
     let size = 20;
 
@@ -247,6 +247,7 @@ export default function createPlaylist(
       .then((res) => {
         playlist_id = res.data["id"];
         playlist_uri = res.data["uri"];
+        share_url = res.data["external_urls"]["spotify"];
       })
       .catch((error) => {
         reject("Can't create a new playlist: \n" + error);
@@ -282,6 +283,6 @@ export default function createPlaylist(
         return;
       });
 
-    resolve(playlist_uri);
+    resolve([playlist_uri, share_url]);
   });
 }

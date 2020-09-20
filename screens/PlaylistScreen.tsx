@@ -31,7 +31,7 @@ const PlaylistScreen = ({ navigation, route }) => {
       const result = await Share.share({
         message:
           "Check out this playlist made based off of my face! " +
-          route.params.link,
+          route.params.link[1],
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -86,7 +86,7 @@ const PlaylistScreen = ({ navigation, route }) => {
             <TouchableHighlight
               style={styles.submit}
               underlayColor="#1DB954"
-              onPress={() => Linking.openURL(route.params.link)}
+              onPress={() => Linking.openURL(route.params.link[0])}
             >
               <Text style={styles.submitText}>open playlist in Spotify</Text>
             </TouchableHighlight>
