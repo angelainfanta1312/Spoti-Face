@@ -64,7 +64,13 @@ const LandingScreen = ({ navigation }: any) => {
     {
       responseType: ResponseType.Token,
       clientId: "2d76215e913f4fcf92c226d665f58c1b",
-      scopes: ["playlist-modify-private", "playlist-modify-public", "ugc-image-upload", "user-top-read", "user-library-read"],
+      scopes: [
+        "playlist-modify-private",
+        "playlist-modify-public",
+        "ugc-image-upload",
+        "user-top-read",
+        "user-library-read",
+      ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
@@ -80,7 +86,7 @@ const LandingScreen = ({ navigation }: any) => {
       //console.log(response.authentication?.accessToken);
       //console.log(" response was success")
       //setAuthtoken(response.params.access_token)
-      navigation.navigate("Camera", {token: response.params.access_token})
+      navigation.navigate("Camera", { token: response.params.access_token });
     }
   }, [response]);
 
@@ -200,7 +206,7 @@ const LandingScreen = ({ navigation }: any) => {
               style={styles.submit}
               underlayColor="#1DB954"
               onPress={() => {
-                promptAsync()
+                promptAsync();
               }}
             >
               <Text style={styles.submitText}>login to spotify</Text>
@@ -287,7 +293,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     flexDirection: "row",
     paddingTop: 45,
-    paddingHorizontal: 25,
+    paddingHorizontal: 45,
   },
   titleTextFourth: {
     fontSize: 20,
