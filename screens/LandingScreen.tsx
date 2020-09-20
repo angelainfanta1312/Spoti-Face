@@ -105,11 +105,11 @@ const LandingScreen = ({ navigation }: any) => {
 
             <Image
               source={{ uri: onboard1.uri }}
-              style={{ width: 400, height: 400 }}
+              style={{ width: 410, height: 410 }}
             />
 
             <Text style={styles.titleTextThird}>
-              If you see green, you're good to go.
+              if you see green, you're good to go
             </Text>
 
             <View style={styles.footerWrapper}>
