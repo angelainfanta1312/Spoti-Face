@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React, { FunctionComponent, Dispatch, SetStateAction } from 'react';
 import { Asset } from 'expo-asset';
 import * as Linking from 'expo-linking';
-import { makeRedirectUri, useAuthRequest, ResponseType } from 'expo-auth-session';
 const iconround = Asset.fromModule(require("../assets/images/icon.png"));
 const spottext = Asset.fromModule(
   require('../assets/images/spotifacetext.png')
@@ -23,35 +22,13 @@ import {
 } from 'react-native';
 import createPlaylist from '../Playlist';
 
-
 const PlaylistScreen = (
 { navigation,
   route
 }) => {
-	const discovery = {
-		authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-		tokenEndpoint: 'https://accounts.spotify.com/api/token',
-	};
-	
-	const [request, response, promptAsync] = useAuthRequest(
-		{
-			responseType: ResponseType.Token,
-			clientId: '2d76215e913f4fcf92c226d665f58c1b',
-			scopes: ['playlist-modify-private', 'playlist-modify-public'],
-			// In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
-			// this must be set to false
-			usePKCE: false,
-			// For usage in managed apps using the proxy
-			redirectUri: makeRedirectUri(),
-		},
-		discovery
-	);
-	React.useEffect(() => {
-		if (response?.type === 'success') {
-			const { token } = response.params;
-			console.log(response.authentication?.accessToken)
-	}}, [response]);
-
+	// function Playlist(){
+	// 	Linking.openURL(playlist_id)
+	// }
   
   var link = null;
   const [state, setState] = React.useState(0);
@@ -116,7 +93,7 @@ const PlaylistScreen = (
               <TouchableHighlight
                 style={styles.submit}
                 underlayColor="#1DB954"
-                onPress={() =>{promptAsync()}}
+                onPress={() =>{console.log("Temp go to playlist")}}
               >
                 <Text style={styles.submitText}>open playlist in Spotify</Text>
               </TouchableHighlight>
