@@ -1,6 +1,7 @@
 const axios = require("axios");
 
 // export default function createPlaylist(base64:string, face:any){
+<<<<<<< HEAD
 export default function createPlaylist(image_data: string, sp: any, token) {
   return new Promise(async (resolve, reject) => {
     //figure out TARGETPARAMS
@@ -50,6 +51,96 @@ export default function createPlaylist(image_data: string, sp: any, token) {
         for (var i = 0; i < data.length; i++) {
           topTracks.push(data[i]["uri"]);
           //console.log(data[i]["uri"])
+=======
+export default function createPlaylist(image_data: string, face: any, token){
+    return new Promise(async (resolve, reject) => {
+
+        //figure out TARGETPARAMS
+        // []
+        console.log("Face passed to createPlaylist: " + JSON.stringify(face))
+        return
+
+        let sp = .99
+                
+
+        // []
+        // (outputs {target_energy, target_danceability...})
+
+        //for now, 
+        let params = {valence: sp}
+        console.log("Smile Prob: " + sp)
+        let variability = .15;
+
+
+		//handle auth...
+		function getUserPass(){
+				let auth_token = "BQCpvnpMVtbtnXrGUmkU2omVT2q83rGnL0B1Lsambr_FNDYr5faTasYki4lrrEphUJrM_ynas2LGPf0-C3sBLjzzSetIwpnL0_MBkwyOSndaZwws056dwPpoPwZasF23cfUK1BRPvJrm-_ISJcspxruU1bJppwFO9aTbUDOmAgKu_sHV1Y3llVCBFknevid0qbZGfwFwtgmQ25IEp6j757uAJV_yLfGK4k_vXT-kIyM1SIZqxLbMo8ytFx5yhO-EBfYrHrKSFRDV0EMx"
+				let user_name = "noteaholic"
+				return [auth_token, user_name]
+		} 
+		// <-- return baharuser baharpass  (eventually, will have from OAuth2) (Or locally?)
+		// getCredentials() <-- return credentials (eventually, go fetch from backend)
+
+		let auth = getUserPass()
+		let auth_token = auth[0]
+		let user_name = auth[1]
+		let playlist_name = "buffyiscool69"
+		let newness = .3 //:[0, 1] indicate fraction of tracks to come from getseed (also recentness?)
+		let size = 20 //not really though
+        
+
+		let playlist_id = null;
+		let topTracks = []
+
+
+		// #Gets the uris of the top tracks
+		await axios.get('https://api.spotify.com/v1/me/top/tracks', {
+				headers: {
+						'Authorization' : 'Bearer ' + auth_token,
+				},
+				params: {
+					'limit': 50,
+				}
+		})
+		.then((res) => {
+				let data = res.data["items"];
+				for(var i = 0; i < data.length; i++){
+						topTracks.push(data[i]["uri"])
+						//console.log(data[i]["uri"])
+		}
+		})
+		.catch((error) => {
+				//console.error(error)
+                reject("Couldn't get the top tracks")
+                return
+		})
+
+		// #To get emotionally appropriate songs from top tracks
+		let emotionTopTracks = []
+		for(var i = 0; i < topTracks.length; i++){
+				
+            let split = topTracks[i].split(":")
+            let track_id = split[2]
+            await axios.get('https://api.spotify.com/v1/audio-features/' + track_id, {
+            headers: {
+                    'Authorization' : 'Bearer ' + auth_token,
+            }
+            })
+            .then((res) => {
+                    let features = res.data
+                    //console.log(features["valence"])
+                    let valDiff = Math.abs(features["valence"] - params.valence) //use this to sort later
+                    if(valDiff < variability){
+                            emotionTopTracks.push(topTracks[i])
+                    }
+                    // //console.log(res.data)
+            })
+            .catch((error) => {
+                    //console.error(error)
+                    reject("Couldn't get the audio features")
+                    return
+            })
+>>>>>>> 9001d09e92ce2a3a682acf551b770376333cfec6
         }
       })
       .catch((error) => {
