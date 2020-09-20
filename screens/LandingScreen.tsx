@@ -99,67 +99,87 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <Image
-            source={{ uri: iconround.uri }}
-            style={{
-              width: 100,
-              height: 100,
-              alignItems: "center",
-              paddingBottom: 25,
-              marginTop: 70,
-              display: "flex",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          />
-
-          <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+          <TouchableOpacity onPress={() => setState(0)}>
             <Image
-              source={{ uri: spottext.uri }}
+              source={{ uri: iconround.uri }}
               style={{
-                width: 225,
-                height: 60,
+                width: 100,
+                height: 100,
+                alignItems: "center",
+                paddingBottom: 25,
+                marginTop: 70,
                 display: "flex",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
             />
-          </View>
-          <Text style={{
-            fontSize: 60,
-            fontWeight: "400",
-            flexWrap: 'wrap',
-            color: "white",
-            paddingHorizontal: 15,
-            paddingTop : 40,
-            textAlign: "center",}}>
-                  welcome to a</Text>
-                  <Text style={{
-            fontSize: 60,
-            fontWeight: "400",
-            flexWrap: 'wrap',
-            color: "white",
-            paddingHorizontal: 15,
-            textAlign: "center",}}>
-                  whole new</Text>
-                  <Text style={{
-            fontSize: 60,
-            fontWeight: "400",
-            flexWrap: 'wrap',
-            color: "white",
-            paddingHorizontal: 15,
-            textAlign: "center",}}>
-                  listening </Text>
-                  <Text style={{
-            fontSize: 60,
-            fontWeight: "400",
-            flexWrap: 'wrap',
-            color: "white",
-            paddingHorizontal: 15,
-            textAlign: "center",}}>
-                  experience </Text>
-                  <TouchableOpacity onPress={() => setState(0)}>
-          <Text style={styles.titleTextThirdish1}>tap to get started</Text></TouchableOpacity>
+
+            <View style={{ paddingTop: 25, paddingBottom: 25 }}>
+              <Image
+                source={{ uri: spottext.uri }}
+                style={{
+                  width: 225,
+                  height: 60,
+                  display: "flex",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+              />
+            </View>
+            <Text
+              style={{
+                fontSize: 60,
+                fontWeight: "400",
+                flexWrap: "wrap",
+                color: "white",
+                paddingHorizontal: 15,
+                paddingTop: 40,
+                textAlign: "center",
+              }}
+            >
+              welcome to a
+            </Text>
+            <Text
+              style={{
+                fontSize: 60,
+                fontWeight: "400",
+                flexWrap: "wrap",
+                color: "white",
+                fontFamily: "Avenir-Light",
+                paddingHorizontal: 15,
+                textAlign: "center",
+              }}
+            >
+              whole new
+            </Text>
+            <Text
+              style={{
+                fontSize: 60,
+                fontWeight: "400",
+                flexWrap: "wrap",
+                color: "white",
+                paddingHorizontal: 15,
+                textAlign: "center",
+              }}
+            >
+              listening{" "}
+            </Text>
+            <Text
+              style={{
+                fontSize: 60,
+                fontWeight: "400",
+                flexWrap: "wrap",
+                color: "white",
+                paddingHorizontal: 15,
+                textAlign: "center",
+              }}
+            >
+              experience{" "}
+            </Text>
+            <TouchableOpacity onPress={() => setState(0)}>
+              <Text style={styles.titleTextThirdish1}>tap to get started</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </View>
     );

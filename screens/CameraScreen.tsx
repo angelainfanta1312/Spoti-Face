@@ -84,7 +84,7 @@ const CameraScreen = ({ navigation, route }) => {
         );
         createPlaylist(photo.base64, faces[0], route.params.token)
           .then((playlink: any) => {
-            navigation.navigate("Playlist", { link: playlink });
+            navigation.navigate("Playlist", { link: playlink,});
           })
           .catch((error: any) => {
             console.log(
