@@ -85,20 +85,20 @@ const HomeScreen = ({ navigation }: any) => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: "2d76215e913f4fcf92c226d665f58c1b",
+      clientId: "b7892ab76c7845cfa8c555d6ac8c21d8",
       scopes: ["playlist-modify-private", "playlist-modify-public"],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
       // For usage in managed apps using the proxy
-      redirectUri: makeRedirectUri(),
+      redirectUri: 'exp://192.168.0.103:19000/two',
     },
     discovery
   );
   React.useEffect(() => {
     if (response?.type === "success") {
       const { token } = response.params;
-      console.log(response.authentication?.accessToken);
+      console.log(token);
     }
   }, [response]);
 
