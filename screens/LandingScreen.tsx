@@ -330,7 +330,6 @@ const LandingScreen = ({ navigation }: any) => {
                   promptAsync();
                 }}
               >
-
                 <Text style={styles.submitText}>login to spotify</Text>
               </TouchableHighlight>
             </TouchableOpacity>

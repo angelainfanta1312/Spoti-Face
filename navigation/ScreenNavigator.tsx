@@ -7,6 +7,7 @@ import {
   makeRedirectUri,
   useAuthRequest,
   ResponseType,
+  AccessTokenRequest,
 } from "expo-auth-session";
 import Icon from "react-native-vector-icons/Ionicons";
 import {
