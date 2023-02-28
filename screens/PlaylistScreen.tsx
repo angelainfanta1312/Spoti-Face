@@ -132,14 +132,14 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: "normal",
     color: "white",
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
   titleTextSecond: {
-    fontSize: 56,
+    fontSize: 46,
     fontWeight: "400",
     color: "white",
     paddingLeft: 15,
@@ -170,11 +170,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   submit: {
-    marginRight: 40,
-    marginLeft: 40,
+    marginRight: 30,
+    marginLeft: 30,
     marginTop: 10,
-    paddingTop: 20,
-    paddingBottom: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     backgroundColor: "#1DB970",
     borderRadius: 18,
     borderWidth: 1,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     fontFamily: "Avenir-Light",
   },
   buttonsStyle: {
-    paddingTop: 20,
+    paddingTop: 10,
   },
 });
 

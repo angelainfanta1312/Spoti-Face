@@ -7,11 +7,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { FunctionComponent, Dispatch, SetStateAction } from "react";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
+import { useEffect, useState } from "react";
 import {
   makeRedirectUri,
   useAuthRequest,
   ResponseType,
 } from "expo-auth-session";
+import axios from "axios";
 const iconround = Asset.fromModule(require("../assets/images/icon.png"));
 const spottext = Asset.fromModule(
   require("../assets/images/spotifacetext.png")
@@ -65,35 +67,57 @@ const LandingScreen = ({ navigation }: any) => {
     tokenEndpoint: "https://accounts.spotify.com/api/token",
   };
 
+  const [token, setToken] = useState("");
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: "2d76215e913f4fcf92c226d665f58c1b",
+      clientId: "b7892ab76c7845cfa8c555d6ac8c21d8",
       scopes: [
+        "user-read-currently-playing",
+        "user-read-recently-played",
+        "user-read-playback-state",
         "playlist-modify-private",
         "playlist-modify-public",
         "ugc-image-upload",
         "user-top-read",
         "user-library-read",
+        "user-modify-playback-state",
+        "streaming",
+        "user-read-email",
+        "user-read-private",
       ],
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
-      // For usage in managed apps using the proxy
-      redirectUri: makeRedirectUri(),
+      redirectUri: "exp://192.168.0.103:19000/",
+      //showDialog: true,
     },
     discovery
   );
-  React.useEffect(() => {
+  useEffect(() => {
     if (response?.type === "success") {
-      //const { token } = response.params;
-      //console.log(JSON.stringify(response.params, null, "\n"))
-      //console.log(response.authentication?.accessToken);
-      //console.log(" response was success")
-      //setAuthtoken(response.params.access_token)
-      navigation.navigate("Camera", { token: response.params.access_token });
+      const { access_token } = response.params;
+      console.log(access_token);
+      setToken(access_token);
+      navigation.navigate("Camera", { token: access_token });
     }
   }, [response]);
+
+  useEffect(() => {
+    if (token) {
+      axios("https://api.spotify.com/v1/me/top/tracks?time_range=short_term", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .catch((error) => {
+          console.log("error", error.message);
+        });
+    }
+  });
 
   if (state === 4) {
     return (
@@ -298,7 +322,7 @@ const LandingScreen = ({ navigation }: any) => {
                   }}
                 />
               </View>
-        <Text style={styles.submitText}>to get started, just</Text>
+
               <TouchableHighlight
                 style={styles.submit}
                 underlayColor="#1DB954"
@@ -306,7 +330,6 @@ const LandingScreen = ({ navigation }: any) => {
                   promptAsync();
                 }}
               >
-                
                 <Text style={styles.submitText}>login to spotify</Text>
               </TouchableHighlight>
             </TouchableOpacity>
