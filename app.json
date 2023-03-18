@@ -19,10 +19,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.angelainfantaramesh.Spotiface"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "04caf458-2899-4735-948f-cc24fbcec00b"
+      }
+    },
+    "android": {
+      "package": "com.angelainfantaramesh.Spotiface"
     }
   }
 }

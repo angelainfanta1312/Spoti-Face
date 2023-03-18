@@ -77,11 +77,11 @@ const FailureScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1DB954',
+    backgroundColor: '#073763',
     //alignItems: 'center',
     justifyContent: 'flex-start',
     paddingLeft: 15,
-    paddingTop: 60,
+    paddingTop: 30,
   },
   headerContainer: {
     flex: 0.15,

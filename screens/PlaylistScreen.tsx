@@ -120,7 +120,7 @@ const PlaylistScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1DB954",
+    backgroundColor: "#073763",
     //alignItems: 'center',
     justifyContent: "flex-start",
     paddingLeft: 15,
@@ -132,14 +132,14 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 50,
+    fontSize: 40,
     fontWeight: "normal",
     color: "white",
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
   titleTextSecond: {
-    fontSize: 46,
+    fontSize: 40,
     fontWeight: "400",
     color: "white",
     paddingLeft: 15,

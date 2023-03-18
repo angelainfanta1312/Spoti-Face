@@ -13,6 +13,7 @@ import {
   useAuthRequest,
   ResponseType,
 } from "expo-auth-session";
+import  * as Linking from 'expo-linking';
 import axios from "axios";
 const iconround = Asset.fromModule(require("../assets/images/icon.png"));
 const spottext = Asset.fromModule(
@@ -68,6 +69,7 @@ const LandingScreen = ({ navigation }: any) => {
   };
 
   const [token, setToken] = useState("");
+  const URL = Linking.makeUrl().concat('/')
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
@@ -89,7 +91,8 @@ const LandingScreen = ({ navigation }: any) => {
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
-      redirectUri: "exp://192.168.0.103:19000/",
+      redirectUri: URL
+      //"http://192.168.0.105:19006/",
       //showDialog: true,
     },
     discovery
@@ -123,7 +126,9 @@ const LandingScreen = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => setState(0)}>
+          <TouchableOpacity
+          onPress={() => setState(0)}
+           >
             <Image
               source={{ uri: iconround.uri }}
               style={{
@@ -152,7 +157,7 @@ const LandingScreen = ({ navigation }: any) => {
             </View>
             <Text
               style={{
-                fontSize: 60,
+                fontSize: 50,
                 fontWeight: "400",
                 flexWrap: "wrap",
                 color: "white",
@@ -166,7 +171,7 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
             <Text
               style={{
-                fontSize: 60,
+                fontSize: 50,
                 fontWeight: "400",
                 flexWrap: "wrap",
                 color: "white",
@@ -179,7 +184,7 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
             <Text
               style={{
-                fontSize: 60,
+                fontSize: 50,
                 fontWeight: "400",
                 flexWrap: "wrap",
                 color: "white",
@@ -192,7 +197,7 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
             <Text
               style={{
-                fontSize: 60,
+                fontSize: 50,
                 fontWeight: "400",
                 flexWrap: "wrap",
                 color: "white",
@@ -203,24 +208,23 @@ const LandingScreen = ({ navigation }: any) => {
             >
               experience{" "}
             </Text>
-            <TouchableOpacity onPress={() => setState(0)}>
-              <Text style={styles.titleTextThirdish1}>tap to get started</Text>
-            </TouchableOpacity>
-          </TouchableOpacity>
+
+            <Text style={styles.titleTextThirdish1}>tap to get started</Text>
+           </TouchableOpacity>
+
         </View>
       </View>
     );
-  } else if (state === 0) {
+  }if (state === 0) {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => setState(1)}>
             <Text style={styles.titleTextFirst}>Step 1: </Text>
             <Text style={styles.titleTextSecond}>take a picture</Text>
 
             <Image
               source={{ uri: onboard1.uri }}
-              style={{ width: 425, height: 425 }}
+              style={{ width: 325, height: 325 }}
             />
 
             <Text style={styles.titleTextThird}>
@@ -228,25 +232,42 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
+            <TouchableOpacity
+            onPress={() => setState(0)}
+            >
               <Icon name="circle-thin" size={32} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(1)}
+            >
+                <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity> 
+            <TouchableOpacity
+            onPress={() => setState(2)}
+            >
               <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(3)}
+            >
               <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+
         </View>
       </View>
     );
-  } else if (state === 1) {
+  }if (state === 1) {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => setState(2)}>
+
             <Text style={styles.titleTextFirst}>Step 2: </Text>
             <Text style={styles.titleTextSecond2}>we analyze your face</Text>
 
             <Image
               source={{ uri: onboard2.uri }}
-              style={{ width: 375, height: 375 }}
+              style={{ width: 325, height: 325 }}
             />
 
             <Text style={styles.titleTextThird}>
@@ -255,19 +276,35 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
+              <TouchableOpacity
+            onPress={() => setState(0)}
+            >
               <Icon name="circle-thin" size={32} color="green" />
-              <Icon name="circle-thin" size={32} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(1)}
+            >
+                <Icon name="circle-thin" size={32} color="white" />
+            </TouchableOpacity> 
+            <TouchableOpacity
+            onPress={() => setState(2)}
+            >
               <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(3)}
+            >
+              <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+
         </View>
       </View>
     );
-  } else if (state === 2) {
+  }if (state === 2) {
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => setState(3)}>
             <Text style={styles.titleTextFirst}>Step 3: </Text>
             <Text style={styles.titleTextSecond}>create your playlist</Text>
 
@@ -283,15 +320,32 @@ const LandingScreen = ({ navigation }: any) => {
             </Text>
 
             <View style={styles.footerWrapper}>
+            <TouchableOpacity
+            onPress={() => setState(0)}
+            >
               <Icon name="circle-thin" size={32} color="green" />
-              <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(1)}
+            >
+                <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity> 
+            <TouchableOpacity
+            onPress={() => setState(2)}
+            >
               <Icon name="circle-thin" size={32} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(3)}
+            >
+              <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+
         </View>
       </View>
     );
-  } else {
+  }if (state === 3){
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -332,8 +386,30 @@ const LandingScreen = ({ navigation }: any) => {
               >
                 <Text style={styles.submitText}>login to spotify</Text>
               </TouchableHighlight>
-            </TouchableOpacity>
+              </TouchableOpacity>
           </View>
+          <View style={styles.footerWrapper}>
+            <TouchableOpacity
+            onPress={() => setState(0)}
+            >
+              <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(1)}
+            >
+                <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity> 
+            <TouchableOpacity
+            onPress={() => setState(2)}
+            >
+              <Icon name="circle-thin" size={32} color="green" />
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => setState(3)}
+            >
+              <Icon name="circle-thin" size={32} color="white" />
+            </TouchableOpacity>
+            </View>
         </View>
       </View>
     );
@@ -343,7 +419,7 @@ const LandingScreen = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#1DB954",
+    backgroundColor: "#073763",
     //alignItems: 'center',
     justifyContent: "flex-start",
     paddingTop: 60,
@@ -354,7 +430,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 88,
+    fontSize: 58,
     fontWeight: "normal",
     color: "white",
     paddingLeft: 15,
@@ -383,7 +459,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     paddingHorizontal: 15,
-    paddingVertical: 30,
+    paddingVertical: 5,
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
@@ -391,7 +467,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "400",
     color: "white",
-    paddingTop: 90,
+    paddingTop: 60,
     paddingHorizontal: 15,
     textAlign: "center",
     fontFamily: "Avenir-Light",
@@ -401,7 +477,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     paddingHorizontal: 15,
-    paddingBottom: 50,
+    paddingBottom: 10,
     textAlign: "center",
     fontFamily: "Avenir-Light",
   },
@@ -437,7 +513,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: "#1DB970",
+    backgroundColor: "#073763",
     borderRadius: 18,
     borderWidth: 1,
     borderColor: "#fff",

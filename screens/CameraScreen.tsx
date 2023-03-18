@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import { Camera } from "expo-camera";
 import * as FaceDetector from "expo-face-detector";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -47,8 +47,7 @@ const CameraScreen = ({ navigation, route }) => {
         base64: true,
         quality: 0.03,
       });
-
-      this.camera.pausePreview();
+      //this.camera.pausePreview();
       setPressed(true);
     } else {
       console.log("camera not set or no face onscreen");
@@ -56,7 +55,8 @@ const CameraScreen = ({ navigation, route }) => {
   };
 
   let deny = () => {
-    this.camera.resumePreview();
+    //this.camera.resumePreview();
+    renderUnpressed();
     setPressed(false);
     photo = null;
   };
@@ -97,7 +97,7 @@ const CameraScreen = ({ navigation, route }) => {
   };
 
   let onFaceDetected = (faces) => {
-    if (faces.faces.length > 0) setFaceOnscreen(true);
+    if (faces.faces.length > 0 && faces.faces[0].bounds.origin.x > 0 && faces.faces[0].bounds.origin.y < 300) setFaceOnscreen(true);
     else setFaceOnscreen(false);
   };
 
@@ -120,13 +120,10 @@ const CameraScreen = ({ navigation, route }) => {
         }}
       >
         <View style={{ flex: 1, paddingBottom: 20 }}>
-          <Camera
-            style={{ flex: 1, marginBottom: 0, marginTop: 0 }}
-            type="front"
-            ref={(ref) => {
-              this.camera = ref;
-            }}
-          />
+        <Image
+                source={{ uri: photo.uri }}
+                style={{ flex: 1, marginBottom: 0, marginTop: 30, width: 395, height: 325 }}
+              />
         </View>
         <View
           style={{

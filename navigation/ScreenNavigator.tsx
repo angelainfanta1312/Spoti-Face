@@ -24,7 +24,12 @@ import CameraScreen from "../screens/CameraScreen";
 import PlaylistScreen from "../screens/PlaylistScreen";
 import LoadingScreen from "../screens/LoadingScreen";
 import FailureScreen from "../screens/FailureScreen";
+import Constants from "expo-constants";
+const { manifest } = Constants;
 
+const api = (typeof manifest.packagerOpts === `object`) && manifest.packagerOpts.dev ? manifest.debuggerHost.split(`:`).shift().concat(`:3000`)
+  : `api.example.com`;
+console.log("api", api)
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -92,7 +97,7 @@ const HomeScreen = ({ navigation }: any) => {
       // this must be set to false
       usePKCE: false,
       // For usage in managed apps using the proxy
-      redirectUri: 'exp://192.168.0.103:19000/two',
+      redirectUri: 'exp://192.168.0.105:19000/',
     },
     discovery
   );
