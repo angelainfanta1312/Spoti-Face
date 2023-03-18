@@ -89,13 +89,13 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 64,
+    fontSize: 50,
     fontWeight: 'normal',
     color: 'white',
     textAlign: 'center',
   },
   titleTextSecond: {
-    fontSize: 56,
+    fontSize: 30,
     fontWeight: '400',
     color: 'white',
     paddingLeft: 15,

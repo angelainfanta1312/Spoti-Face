@@ -38,7 +38,7 @@ import {
   View,
   SafeAreaView,
   Text,
-  Alert,
+  ToastAndroid,
   Image,
   TouchableOpacity,
   TouchableHighlight,
@@ -100,9 +100,13 @@ const LandingScreen = ({ navigation }: any) => {
   useEffect(() => {
     if (response?.type === "success") {
       const { access_token } = response.params;
-      console.log(access_token);
+      //console.log(access_token);
       setToken(access_token);
       navigation.navigate("Camera", { token: access_token });
+      ToastAndroid.showWithGravity('Spotify Login Successful!', ToastAndroid.LONG, ToastAndroid.CENTER,);
+    }
+    else{
+      ToastAndroid.showWithGravity('Your Spotify Login Failed!', ToastAndroid.LONG, ToastAndroid.CENTER,);
     }
   }, [response]);
 
