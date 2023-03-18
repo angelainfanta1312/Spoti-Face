@@ -49,13 +49,13 @@ const FailureScreen = ({navigation}) => {
           />
         </View>
 
+        <Text style={styles.titleTextFirst}>oops!</Text>
+
         <Text style={styles.titleTextFirst}>your playlist</Text>
 
-        <Text style={styles.titleTextFirst}>could not be</Text>
+        <Text style={styles.titleTextFirst}>could not be created</Text>
 
-        <Text style={styles.titleTextFirst}>created</Text>
-
-        <Text style={styles.titleTextFirst}>:(  </Text>
+        <Text style={styles.titleTextFirst}>:( </Text>
 
         <View style={styles.buttonsStyle}>
 
@@ -65,7 +65,7 @@ const FailureScreen = ({navigation}) => {
               underlayColor="#1DB954"
               onPress={() => navigation.navigate('Camera')}
             >
-              <Text style={styles.submitText}>try again</Text>
+              <Text style={styles.submitText}>Try Again</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     justifyContent: 'flex-start',
     paddingLeft: 15,
-    paddingTop: 30,
+    paddingTop: 40,
   },
   headerContainer: {
     flex: 0.15,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'center'
   },
   titleTextFirst: {
-    fontSize: 50,
+    fontSize: 37,
     fontWeight: 'normal',
     color: 'white',
     textAlign: 'center',
@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   submit: {
-    marginRight: 40,
-    marginLeft: 40,
+    marginRight:50,
+    marginLeft: 50,
     paddingTop: 20,
     paddingBottom: 20,
     backgroundColor: '#1DB970',
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   buttonsStyle: {
-    paddingTop: 25,
+    paddingTop: 29,
   },
 });
 

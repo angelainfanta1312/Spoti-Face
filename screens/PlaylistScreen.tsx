@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     justifyContent: "flex-start",
     paddingLeft: 15,
-    paddingTop: 60,
+    paddingTop: 40,
   },
   headerContainer: {
     flex: 0.15,
